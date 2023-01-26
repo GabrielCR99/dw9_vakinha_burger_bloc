@@ -1,15 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'controller/product_detail_controller.dart';
 import 'product_detail_page.dart';
 
-class ProductDetailRouter {
-  const ProductDetailRouter._();
+class ProductDetailRouter extends StatelessWidget {
+  const ProductDetailRouter({super.key});
 
-  static Widget get page => Provider(
-        create: (_) => ProductDetailController(),
-        builder: (context, _) {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ProductDetailController(),
+      child: Builder(
+        builder: (context) {
           final args = ModalRoute.of(context)!.settings.arguments
               as Map<String, dynamic>;
 
@@ -18,5 +22,7 @@ class ProductDetailRouter {
             productOrder: args['order'],
           );
         },
-      );
+      ),
+    );
+  }
 }

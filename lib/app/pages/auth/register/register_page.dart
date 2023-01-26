@@ -24,6 +24,7 @@ class _RegisterPageState extends BaseState<RegisterPage, RegisterController> {
 
   @override
   void dispose() {
+    _formKey.currentState?.dispose();
     _nameEC.dispose();
     _emailEC.dispose();
     _passwordEC.dispose();
@@ -32,89 +33,93 @@ class _RegisterPageState extends BaseState<RegisterPage, RegisterController> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<RegisterController, RegisterState>(
-      listener: (_, state) => state.status.matchAny(
-        any: hideLoader,
-        register: showLoader,
-        success: () {
-          hideLoader();
-          showSuccess('Usuário registrado com sucesso');
-          Navigator.of(context).pop();
-        },
-        error: () {
-          hideLoader();
-          showError('Erro ao registrar usuário');
-        },
-      ),
-      child: Scaffold(
-        appBar: DeliveryAppBar(),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Cadastro',
-                    style: context.textStyles.textTitle,
-                  ),
-                  Text(
-                    'Preencha os campos abaixo para criar o seu cadastro',
-                    style: context.textStyles.textMedium.copyWith(fontSize: 18),
-                  ),
-                  const SizedBox(height: 30),
-                  TextFormField(
-                    controller: _nameEC,
-                    decoration: const InputDecoration(label: Text('Nome')),
-                    validator: Validatorless.required('Nome obrigatório'),
-                  ),
-                  const SizedBox(height: 30),
-                  TextFormField(
-                    controller: _emailEC,
-                    decoration: const InputDecoration(label: Text('Email')),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: Validatorless.multiple([
-                      Validatorless.required('Email obrigatório'),
-                      Validatorless.email('Email inválido'),
-                    ]),
-                  ),
-                  const SizedBox(height: 30),
-                  TextFormField(
-                    controller: _passwordEC,
-                    decoration: const InputDecoration(label: Text('Senha')),
-                    obscureText: true,
-                    validator: Validatorless.multiple([
-                      Validatorless.required('Senha obrigatória'),
-                      Validatorless.min(
-                        6,
-                        'Senha deve ter no mínimo 6 caracteres',
-                      ),
-                    ]),
-                  ),
-                  const SizedBox(height: 30),
-                  TextFormField(
-                    decoration:
-                        const InputDecoration(label: Text('Confirmar senha')),
-                    obscureText: true,
-                    validator: Validatorless.multiple([
-                      Validatorless.required('Senha obrigatória'),
-                      Validatorless.compare(
-                        _passwordEC,
-                        'As senhas não são iguais',
-                      ),
-                    ]),
-                  ),
-                  const SizedBox(height: 30),
-                  Center(
-                    child: DeliveryButton(
-                      label: 'Cadastrar',
-                      onPressed: _onPressedRegister,
-                      width: double.infinity,
+    return BlocProvider(
+      create: (context) => RegisterController(authRepository: context.read()),
+      child: BlocListener<RegisterController, RegisterState>(
+        listener: (_, state) => state.status.matchAny(
+          any: hideLoader,
+          register: showLoader,
+          success: () {
+            hideLoader();
+            showSuccess('Usuário registrado com sucesso');
+            Navigator.of(context).pop();
+          },
+          error: () {
+            hideLoader();
+            showError('Erro ao registrar usuário');
+          },
+        ),
+        child: Scaffold(
+          appBar: DeliveryAppBar(),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Cadastro',
+                      style: context.textStyles.textTitle,
                     ),
-                  ),
-                ],
+                    Text(
+                      'Preencha os campos abaixo para criar o seu cadastro',
+                      style:
+                          context.textStyles.textMedium.copyWith(fontSize: 18),
+                    ),
+                    const SizedBox(height: 30),
+                    TextFormField(
+                      controller: _nameEC,
+                      decoration: const InputDecoration(label: Text('Nome')),
+                      validator: Validatorless.required('Nome obrigatório'),
+                    ),
+                    const SizedBox(height: 30),
+                    TextFormField(
+                      controller: _emailEC,
+                      decoration: const InputDecoration(label: Text('Email')),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: Validatorless.multiple([
+                        Validatorless.required('Email obrigatório'),
+                        Validatorless.email('Email inválido'),
+                      ]),
+                    ),
+                    const SizedBox(height: 30),
+                    TextFormField(
+                      controller: _passwordEC,
+                      decoration: const InputDecoration(label: Text('Senha')),
+                      obscureText: true,
+                      validator: Validatorless.multiple([
+                        Validatorless.required('Senha obrigatória'),
+                        Validatorless.min(
+                          6,
+                          'Senha deve ter no mínimo 6 caracteres',
+                        ),
+                      ]),
+                    ),
+                    const SizedBox(height: 30),
+                    TextFormField(
+                      decoration:
+                          const InputDecoration(label: Text('Confirmar senha')),
+                      obscureText: true,
+                      validator: Validatorless.multiple([
+                        Validatorless.required('Senha obrigatória'),
+                        Validatorless.compare(
+                          _passwordEC,
+                          'As senhas não são iguais',
+                        ),
+                      ]),
+                    ),
+                    const SizedBox(height: 30),
+                    Center(
+                      child: DeliveryButton(
+                        label: 'Cadastrar',
+                        onPressed: _onPressedRegister,
+                        width: double.infinity,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

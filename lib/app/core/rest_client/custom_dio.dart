@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
+import 'package:flutter/foundation.dart';
 
 import '../config/env/env.dart';
 import 'interceptors/auth_interceptor.dart';
 
 class CustomDio extends DioForNative {
-  final _authInterceptor = AuthInterceptor();
+  late final _authInterceptor = AuthInterceptor(dio: this);
 
   CustomDio()
       : super(
@@ -15,7 +16,9 @@ class CustomDio extends DioForNative {
             receiveTimeout: 60000,
           ),
         ) {
-    interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+    if (kDebugMode) {
+      interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+    }
   }
 
   CustomDio auth() => this..interceptors.add(_authInterceptor);

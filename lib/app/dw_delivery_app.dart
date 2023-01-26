@@ -4,7 +4,7 @@ import 'core/global/global_context.dart';
 import 'core/provider/application_binding.dart';
 import 'core/ui/theme/theme_config.dart';
 import 'pages/auth/login/login_router.dart';
-import 'pages/auth/register/register_router.dart';
+import 'pages/auth/register/register_page.dart';
 import 'pages/home/home_router.dart';
 import 'pages/order/order_completed_page.dart';
 import 'pages/order/order_router.dart';
@@ -22,16 +22,16 @@ class DwDeliveryApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ApplicationBinding(
       child: MaterialApp(
-        theme: ThemeConfig.theme,
+        theme: theme,
         navigatorKey: _navigatorKey,
         title: 'Delivery App',
         routes: {
           '/': (_) => const SplashPage(),
-          '/home': (_) => HomeRouter.page,
-          '/product_detail': (_) => ProductDetailRouter.page,
-          '/auth/login': (_) => LoginRouter.page,
-          '/auth/register': (_) => RegisterRouter.page,
-          '/order': (_) => OrderRouter.page,
+          '/home': (_) => const HomeRouter(),
+          '/product_detail': (_) => const ProductDetailRouter(),
+          '/auth/login': (_) => const LoginRouter(),
+          '/auth/register': (_) => const RegisterPage(),
+          '/order': (_) => const OrderRouter(),
           '/order/completed': (_) => const OrderCompletedPage(),
         },
       ),

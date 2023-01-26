@@ -9,7 +9,6 @@ analyzer:
     - assets/**
     - "**/*.g.dart"
     - "**/*.freezed.dart"
-    - test/**
 
   errors:
     prefer_relative_imports: warning
@@ -29,7 +28,7 @@ linter:
     - always_require_non_null_named_parameters
     - annotate_overrides
     - avoid_bool_literals_in_conditional_expressions
-    - avoid_classes_with_only_static_members: false
+    - avoid_classes_with_only_static_members
     - avoid_empty_else
     - avoid_escaping_inner_quotes
     - avoid_function_literals_in_foreach_calls
@@ -60,6 +59,7 @@ linter:
     - empty_constructor_bodies
     - eol_at_end_of_file
     - exhaustive_cases
+    - implicit_call_tearoffs
     - join_return_with_assignment
     - missing_whitespace_between_adjacent_strings
     - no_adjacent_strings_in_list

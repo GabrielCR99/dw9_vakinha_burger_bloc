@@ -39,7 +39,9 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
 
   @override
   void dispose() {
+    _formKey.currentState?.dispose();
     _addressEC.dispose();
+    _documentEC.dispose();
     super.dispose();
   }
 
@@ -72,11 +74,7 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
         },
       ),
       child: WillPopScope(
-        onWillPop: () async {
-          Navigator.of(context).pop(controller.state.products);
-
-          return false;
-        },
+        onWillPop: _onWillPop,
         child: Scaffold(
           appBar: DeliveryAppBar(),
           body: Form(
@@ -202,6 +200,12 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
         ),
       ),
     );
+  }
+
+  Future<bool> _onWillPop() async {
+    Navigator.of(context).pop(controller.state.products);
+
+    return false;
   }
 
   void _onPressedFinish() {
