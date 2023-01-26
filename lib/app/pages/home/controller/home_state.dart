@@ -20,7 +20,7 @@ class HomeState extends Equatable {
   final String? errorMessage;
   final List<OrderProductDto> bag;
 
-  const HomeState._({
+  const HomeState({
     required this.status,
     required this.products,
     required this.bag,
@@ -42,7 +42,7 @@ class HomeState extends Equatable {
     String? errorMessage,
     List<OrderProductDto>? bag,
   }) =>
-      HomeState._(
+      HomeState(
         status: status ?? this.status,
         products: products ?? this.products,
         errorMessage: errorMessage ?? this.errorMessage,

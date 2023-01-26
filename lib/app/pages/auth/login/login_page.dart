@@ -23,6 +23,7 @@ class _LoginPageState extends BaseState<LoginPage, LoginController> {
 
   @override
   void dispose() {
+    _formKey.currentState?.dispose();
     _emailEC.dispose();
     _passwordEC.dispose();
     super.dispose();
