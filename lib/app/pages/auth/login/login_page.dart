@@ -4,6 +4,7 @@ import 'package:validatorless/validatorless.dart';
 
 import '../../../core/ui/base_state/base_state.dart';
 import '../../../core/ui/styles/text_styles.dart';
+import '../../../core/ui/widgets/custom_text_form_field.dart';
 import '../../../core/ui/widgets/delivery_app_bar.dart';
 import '../../../core/ui/widgets/delivery_button.dart';
 import 'controller/login_controller.dart';
@@ -62,19 +63,20 @@ class _LoginPageState extends BaseState<LoginPage, LoginController> {
                     children: [
                       Text('Login', style: context.textStyles.textTitle),
                       const SizedBox(height: 30),
-                      TextFormField(
+                      CustomTextFormField(
                         controller: _emailEC,
+                        label: 'Email',
                         keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(label: Text('Email')),
                         validator: Validatorless.multiple([
                           Validatorless.required('Email obrigatório'),
                           Validatorless.email('Email inválido'),
                         ]),
                       ),
                       const SizedBox(height: 30),
-                      TextFormField(
+                      CustomTextFormField(
                         controller: _passwordEC,
-                        decoration: const InputDecoration(label: Text('Senha')),
+                        obscureText: true,
+                        label: 'Senha',
                         validator: Validatorless.required('Senha obrigatória'),
                       ),
                       const SizedBox(height: 50),

@@ -25,9 +25,9 @@ class LoginState extends Equatable {
   @override
   List<Object?> get props => [status, errorMessage];
 
-  LoginState copyWith({LoginStatus? status, String? errorMessage}) =>
+  LoginState copyWith({required LoginStatus status, String? errorMessage}) =>
       LoginState._(
-        status: status ?? this.status,
+        status: status,
         errorMessage: errorMessage ?? this.errorMessage,
       );
 }

@@ -4,7 +4,7 @@ import 'core/global/global_context.dart';
 import 'core/provider/application_binding.dart';
 import 'core/ui/theme/theme_config.dart';
 import 'pages/auth/login/login_router.dart';
-import 'pages/auth/register/register_page.dart';
+import 'pages/auth/register/register_router.dart';
 import 'pages/home/home_router.dart';
 import 'pages/order/order_completed_page.dart';
 import 'pages/order/order_router.dart';
@@ -30,7 +30,7 @@ class DwDeliveryApp extends StatelessWidget {
           '/home': (_) => const HomeRouter(),
           '/product_detail': (_) => const ProductDetailRouter(),
           '/auth/login': (_) => const LoginRouter(),
-          '/auth/register': (_) => const RegisterPage(),
+          '/auth/register': (_) => const RegisterRouter(),
           '/order': (_) => const OrderRouter(),
           '/order/completed': (_) => const OrderCompletedPage(),
         },

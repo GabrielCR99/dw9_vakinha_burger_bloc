@@ -48,13 +48,13 @@ class OrderState extends Equatable {
   List<Object?> get props => [status, products, payments, errorMessage];
 
   OrderState copyWith({
-    OrderStatus? status,
+    required OrderStatus status,
     List<OrderProductDto>? products,
     List<PaymentTypeModel>? payments,
     String? errorMessage,
   }) =>
       OrderState._(
-        status: status ?? this.status,
+        status: status,
         products: products ?? this.products,
         payments: payments ?? this.payments,
         errorMessage: errorMessage ?? this.errorMessage,
