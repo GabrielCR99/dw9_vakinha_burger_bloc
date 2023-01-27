@@ -12,7 +12,7 @@ class HomeRouter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<ProductsRepository>(
-      create: (context) => ProductsRepositoryImpl(dio: context.read()),
+      create: (_) => ProductsRepositoryImpl(dio: context.read()),
       child: BlocProvider(
         create: (context) => HomeController(productsRepository: context.read()),
         child: const HomePage(),

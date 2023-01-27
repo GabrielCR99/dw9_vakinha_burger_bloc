@@ -12,7 +12,7 @@ class OrderRouter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<OrderRepository>(
-      create: (context) => OrderRepositoryImpl(dio: context.read()),
+      create: (_) => OrderRepositoryImpl(dio: context.read()),
       child: BlocProvider(
         create: (context) => OrderController(orderRepository: context.read()),
         child: const OrderPage(),

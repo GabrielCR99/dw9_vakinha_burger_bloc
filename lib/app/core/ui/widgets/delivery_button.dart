@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class DeliveryButton extends StatelessWidget {
   final String label;
-  final VoidCallback? onPressed;
-  final double? width;
-  final double? height;
+  final VoidCallback onPressed;
+  final double width;
+  final double height;
 
   const DeliveryButton({
     required this.label,
-    this.width,
+    required this.width,
+    required this.onPressed,
     this.height = 50,
-    this.onPressed,
     super.key,
   });
 

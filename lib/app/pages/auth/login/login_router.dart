@@ -11,7 +11,7 @@ class LoginRouter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginController(authRepository: context.read()),
+      create: (_) => LoginController(authRepository: context.read()),
       child: const LoginPage(),
     );
   }

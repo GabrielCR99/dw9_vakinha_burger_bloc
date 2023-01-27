@@ -22,7 +22,3 @@ class AppStyles {
         textStyle: TextStyles.i.textButtonLabel,
       );
 }
-
-extension AppStylesExtension on BuildContext {
-  AppStyles get appStyles => AppStyles.i;
-}

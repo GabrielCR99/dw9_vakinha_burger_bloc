@@ -13,9 +13,8 @@ class RegisterState extends Equatable {
 
   const RegisterState.initial() : status = RegisterStatus.initial;
 
-  RegisterState copyWith({RegisterStatus? status}) => RegisterState._(
-        status: status ?? this.status,
-      );
+  RegisterState copyWith({required RegisterStatus status}) =>
+      RegisterState._(status: status);
 
   @override
   List<Object?> get props => [status];
