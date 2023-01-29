@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:validatorless/validatorless.dart';
 
 import '../../core/extensions/formatter_extension.dart';
 import '../../core/ui/base_state/base_state.dart';
+import '../../core/ui/styles/app_colors.dart';
 import '../../core/ui/styles/text_styles.dart';
 import '../../core/ui/widgets/delivery_app_bar.dart';
 import '../../core/ui/widgets/delivery_button.dart';
+import '../../core/ui/widgets/delivery_increment_decrement_button.dart';
 import '../../dto/order_product_dto.dart';
 import '../../models/payment_type_model.dart';
 import 'controller/order_controller.dart';
 import 'controller/order_state.dart';
-import 'widgets/order_field.dart';
-import 'widgets/order_product_tile.dart';
 import 'widgets/payment_types_field.dart';
+
+part 'widgets/__order_field.dart';
+part 'widgets/__order_product_tile.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
@@ -26,8 +31,9 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
   final _formKey = GlobalKey<FormState>();
   final _addressEC = TextEditingController();
   final _documentEC = TextEditingController();
-  int? paymentTypeId;
-  final paymentTypeValid = ValueNotifier(true);
+  final _paymentTypeValid = ValueNotifier(true);
+  final _cpfMask = MaskTextInputFormatter(mask: '###.###.###-##');
+  int? _paymentTypeId;
 
   @override
   void onReady() {
@@ -109,7 +115,7 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
                       childCount: state.length,
                       (_, index) => Column(
                         children: [
-                          OrderProductTile(
+                          _OrderProductTile(
                             index: index,
                             orderProduct: state[index],
                           ),
@@ -145,7 +151,7 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
                       ),
                       const Divider(color: Colors.grey),
                       const SizedBox(height: 10),
-                      OrderField(
+                      _OrderField(
                         title: 'Endereço de entrega',
                         hintText: 'Digite um endereço',
                         validator:
@@ -153,10 +159,14 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
                         controller: _addressEC,
                       ),
                       const SizedBox(height: 10),
-                      OrderField(
+                      _OrderField(
                         title: 'Cpf',
                         hintText: 'Digite o cpf',
-                        validator: Validatorless.required('Cpf obrigatório'),
+                        inputFormatters: [_cpfMask],
+                        validator: Validatorless.multiple([
+                          Validatorless.required('Cpf obrigatório'),
+                          Validatorless.cpf('Cpf inválido'),
+                        ]),
                         controller: _documentEC,
                       ),
                       const SizedBox(height: 20),
@@ -164,13 +174,13 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
                           List<PaymentTypeModel>>(
                         selector: (state) => state.payments,
                         builder: (_, payments) => ValueListenableBuilder(
-                          valueListenable: paymentTypeValid,
+                          valueListenable: _paymentTypeValid,
                           builder: (_, paymentTypeValidValue, __) =>
                               PaymentTypesField(
                             payments: payments,
-                            onChanged: (value) => paymentTypeId = value,
+                            onChanged: (value) => _paymentTypeId = value,
                             valid: paymentTypeValidValue,
-                            selectedValue: '$paymentTypeId',
+                            selectedValue: '$_paymentTypeId',
                           ),
                         ),
                       ),
@@ -210,14 +220,14 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
 
   void _onPressedFinish() {
     final formValid = _formKey.currentState?.validate() ?? false;
-    final hasSelectedPaymentType = paymentTypeId != null;
-    paymentTypeValid.value = hasSelectedPaymentType;
+    final hasSelectedPaymentType = _paymentTypeId != null;
+    _paymentTypeValid.value = hasSelectedPaymentType;
 
     if (formValid && hasSelectedPaymentType) {
       controller.saveOrder(
         address: _addressEC.text,
         document: _documentEC.text,
-        paymentMethodId: paymentTypeId!,
+        paymentMethodId: _paymentTypeId!,
       );
     }
   }
