@@ -35,6 +35,7 @@
 *.freezed.dart
 *.env.*
 /metrics/
+/dw_vakinha_api/
 
 # Web related
 lib/generated_plugin_registrant.dart
