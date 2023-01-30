@@ -141,7 +141,7 @@
 <h2>📝 Licença</h2>
 
 <p>
-   Esse repositório está sobre a Licença MIT, e você pode vê-la no arquivo <a href="https://github.com/felipecastrosales/app_filmes/blob/master/LICENSE">LICENSE</a> para mais detalhes. 😉
+   Esse repositório está sobre a Licença MIT, e você pode vê-la no arquivo <a href="https://github.com/GabrielCR99/dw9_vakinha_burger_bloc/blob/master/LICENSE">LICENSE</a> para mais detalhes. 😉
 </p>
 
 ---
