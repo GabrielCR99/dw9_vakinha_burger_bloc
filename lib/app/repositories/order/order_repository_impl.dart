@@ -12,6 +12,7 @@ class OrderRepositoryImpl implements OrderRepository {
   final CustomDio _dio;
 
   const OrderRepositoryImpl({required CustomDio dio}) : _dio = dio;
+
   @override
   Future<List<PaymentTypeModel>> getPaymentTypes() async {
     try {
