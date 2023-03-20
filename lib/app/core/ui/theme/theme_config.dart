@@ -1,15 +1,12 @@
-import 'package:flutter/material.dart';
-
-import '../styles/app_colors.dart';
-import '../styles/app_styles.dart';
-import '../styles/text_styles.dart';
+part of '../../../dw_delivery_app.dart';
 
 final _defaultInputBorder = OutlineInputBorder(
   borderRadius: const BorderRadius.all(Radius.circular(7)),
   borderSide: BorderSide(color: Colors.grey[400]!),
 );
 
-final theme = ThemeData(
+final _theme = ThemeData(
+  // useMaterial3: true,
   primaryColor: AppColors.i.primary,
   colorScheme: ColorScheme.fromSeed(
     seedColor: AppColors.i.primary,

@@ -9,6 +9,7 @@ analyzer:
     - assets/**
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    # - test/**
 
   errors:
     prefer_relative_imports: warning
@@ -173,9 +174,12 @@ dart_code_metrics:
 
   rules:
     - always-remove-listener
+    - arguments-ordering
     - avoid-border-all
+    - avoid-expanded-as-spacer
     - avoid-cascade-after-if-null
     - avoid-collection-methods-with-unrelated-types
+    - avoid-dynamic
     - avoid-global-state
     - avoid-nested-conditional-expressions
     - avoid-redundant-async
@@ -183,6 +187,7 @@ dart_code_metrics:
     - avoid-shrink-wrap-in-lists
     - avoid-throw-in-catch-block
     - avoid-unnecessary-type-casts
+    - avoid-unnecessary-conditionals
     - avoid-unused-parameters
     - avoid-wrapping-in-padding
     - binary-expression-operand-order
@@ -207,3 +212,5 @@ dart_code_metrics:
     - prefer-single-widget-per-file:
         ignore-private-widgets: true
     - prefer-trailing-comma
+    - prefer-using-list-view
+    - use-setstate-synchronously

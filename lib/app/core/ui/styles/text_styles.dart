@@ -9,32 +9,32 @@ class TextStyles {
     return _instance!;
   }
 
-  String get font => 'mplus1';
+  String get _font => 'mplus1';
 
   TextStyle get textLight =>
-      TextStyle(fontWeight: FontWeight.w300, fontFamily: font);
+      TextStyle(fontWeight: FontWeight.w300, fontFamily: _font);
 
   TextStyle get textRegular =>
-      TextStyle(fontWeight: FontWeight.normal, fontFamily: font);
+      TextStyle(fontWeight: FontWeight.normal, fontFamily: _font);
 
   TextStyle get textMedium => TextStyle(
         fontWeight: FontWeight.w500,
-        fontFamily: font,
+        fontFamily: _font,
       );
 
   TextStyle get textSemiBold => TextStyle(
         fontWeight: FontWeight.w600,
-        fontFamily: font,
+        fontFamily: _font,
       );
 
   TextStyle get textBold => TextStyle(
         fontWeight: FontWeight.bold,
-        fontFamily: font,
+        fontFamily: _font,
       );
 
   TextStyle get textExtraBold => TextStyle(
         fontWeight: FontWeight.w800,
-        fontFamily: font,
+        fontFamily: _font,
       );
 
   TextStyle get textButtonLabel => textBold.copyWith(fontSize: 14);

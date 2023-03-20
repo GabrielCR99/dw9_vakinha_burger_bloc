@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import '../../repositories/order/order_repository.dart';
 import '../../repositories/order/order_repository_impl.dart';
@@ -11,12 +12,16 @@ class OrderRouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider<OrderRepository>(
-      create: (_) => OrderRepositoryImpl(dio: context.read()),
-      child: BlocProvider(
-        create: (context) => OrderController(orderRepository: context.read()),
-        child: const OrderPage(),
-      ),
+    return MultiProvider(
+      providers: [
+        RepositoryProvider<OrderRepository>(
+          create: (_) => OrderRepositoryImpl(dio: context.read()),
+        ),
+        BlocProvider(
+          create: (context) => OrderController(orderRepository: context.read()),
+        ),
+      ],
+      child: const OrderPage(),
     );
   }
 }
