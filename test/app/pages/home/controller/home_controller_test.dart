@@ -18,13 +18,12 @@ class MockDio extends Mock implements CustomDio {
 
 void main() {
   late HomeState state;
-  late MockProductsRepository productsRepository;
+  final productsRepository = MockProductsRepository();
   late HomeController homeController;
   late List<ProductModel> products;
 
   setUp(() {
-    state = const HomeState(status: HomeStatus.initial, products: [], bag: []);
-    productsRepository = MockProductsRepository();
+    state = const HomeState.initial();
     homeController = HomeController(productsRepository: productsRepository);
     products = const [
       ProductModel(
@@ -46,9 +45,9 @@ void main() {
   });
 
   blocTest<HomeController, HomeState>(
-    '''emits [const HomeState(status: HomeStatus.loading, products: [], bag: []), 
-    HomeState(status: HomeStatus.loaded, products: products, bag: const [])] 
-    when loadProducts is called''',
+    'emits [const HomeState(status: HomeStatus.loading, products: [], bag: []), '
+    'HomeState(status: HomeStatus.loaded, products: products, bag: const [])] '
+    'when loadProducts is called',
     build: () => homeController,
     act: (controller) => controller.loadProducts(),
     verify: (_) => verify(productsRepository.findAll).called(1),
@@ -62,9 +61,9 @@ void main() {
   );
 
   blocTest<HomeController, HomeState>(
-    '''emits const [HomeState(status: HomeStatus.loading, products: [], bag: []), 
-    HomeState(status: HomeStatus.error, products: [], bag: [])] 
-    when loadProducts is called''',
+    'emits const [HomeState(status: HomeStatus.loading, products: [], bag: []), '
+    'HomeState(status: HomeStatus.error, products: [], bag: [])] '
+    'when loadProducts is called',
     build: () => homeController,
     act: (controller) => controller.loadProducts(),
     verify: (_) => verify(productsRepository.findAll).called(1),

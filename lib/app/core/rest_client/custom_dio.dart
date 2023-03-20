@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dio/native_imp.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 
 import '../config/env/env.dart';
@@ -12,8 +12,8 @@ class CustomDio extends DioForNative {
       : super(
           BaseOptions(
             baseUrl: Env.i['backend_base_url'] ?? '',
-            connectTimeout: 5000,
-            receiveTimeout: 60000,
+            connectTimeout: const Duration(milliseconds: 5000),
+            receiveTimeout: const Duration(milliseconds: 60000),
           ),
         ) {
     if (kDebugMode) {
