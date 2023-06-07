@@ -16,15 +16,10 @@ import 'controller/home_controller.dart';
 part 'widgets/__delivery_product_tile.dart';
 part 'widgets/__shopping_bag_widget.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  void _homeListener(BuildContext _, HomeState state) {
+  void _homeListener(BuildContext context, HomeState state) {
     switch (state.status) {
       case HomeStatus.initial:
       case HomeStatus.loading:
