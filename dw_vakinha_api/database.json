@@ -17,6 +17,12 @@
             "name": "Gabriel Roveri",
             "email": "gabriel.roveri7@gmail.com",
             "password": "123123"
+        },
+        {
+            "id": 4,
+            "name": "teste",
+            "email": "a@a.com",
+            "password": "123123"
         }
     ],
     "payment-types": [
@@ -263,6 +269,48 @@
             "user_id": "1",
             "address": "Rua X",
             "CPF": "983.979.920-73",
+            "payment_method_id": 1
+        },
+        {
+            "id": 12,
+            "products": [
+                {
+                    "id": 2,
+                    "amount": 7,
+                    "total_price": 105.0
+                }
+            ],
+            "user_id": "1",
+            "address": "adsa",
+            "CPF": "408.291.248-70",
+            "payment_method_id": 3
+        },
+        {
+            "id": 13,
+            "products": [
+                {
+                    "id": 8,
+                    "amount": 1,
+                    "total_price": 19.0
+                }
+            ],
+            "user_id": "4",
+            "address": "adssadasd",
+            "CPF": "408.291.248-70",
+            "payment_method_id": 3
+        },
+        {
+            "id": 14,
+            "products": [
+                {
+                    "id": 1,
+                    "amount": 2,
+                    "total_price": 30.0
+                }
+            ],
+            "user_id": "4",
+            "address": "asda",
+            "CPF": "408.291.248-70",
             "payment_method_id": 1
         }
     ]
