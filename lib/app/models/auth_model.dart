@@ -5,7 +5,7 @@ class AuthModel {
   const AuthModel({required this.accessToken, required this.refreshToken});
 
   factory AuthModel.fromMap(Map<String, dynamic> map) => AuthModel(
-        accessToken: map['access_token'] ?? '',
-        refreshToken: map['refresh_token'] ?? '',
+        accessToken: map['access_token'] as String? ?? '',
+        refreshToken: map['refresh_token'] as String? ?? '',
       );
 }

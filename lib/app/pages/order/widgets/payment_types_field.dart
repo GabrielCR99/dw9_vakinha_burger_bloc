@@ -32,10 +32,17 @@ class PaymentTypesField extends StatelessWidget {
           ),
           SmartSelect.single(
             title: '',
-            groupCounter: false,
+            placeholder: '',
             selectedValue: selectedValue,
-            modalType: S2ModalType.bottomSheet,
             onChange: (value) => onChanged(int.parse(value.value)),
+            choiceItems: S2Choice.listFrom(
+              source: payments
+                  .map((e) => {'value': '${e.id}', 'title': e.name})
+                  .toList(),
+              title: (_, item) => item['title'] ?? '',
+              value: (_, item) => item['value'] ?? '',
+              group: (_, item) => 'Selecione uma forma de pagamento',
+            ),
             tileBuilder: (context, state) => InkWell(
               onTap: state.showModal,
               child: Column(
@@ -70,18 +77,11 @@ class PaymentTypesField extends StatelessWidget {
                 ],
               ),
             ),
-            choiceItems: S2Choice.listFrom(
-              source: payments
-                  .map((e) => {'value': '${e.id}', 'title': e.name})
-                  .toList(),
-              title: (_, item) => item['title'] ?? '',
-              value: (_, item) => item['value'] ?? '',
-              group: (_, item) => 'Selecione uma forma de pagamento',
-            ),
             choiceType: S2ChoiceType.radios,
             choiceGrouped: true,
+            groupCounter: false,
+            modalType: S2ModalType.bottomSheet,
             modalFilter: false,
-            placeholder: '',
           ),
         ],
       ),

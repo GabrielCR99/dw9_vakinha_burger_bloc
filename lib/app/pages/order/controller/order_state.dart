@@ -1,12 +1,5 @@
-import 'package:equatable/equatable.dart';
-import 'package:match/match.dart';
+part of 'order_controller.dart';
 
-import '../../../dto/order_product_dto.dart';
-import '../../../models/payment_type_model.dart';
-
-part 'order_state.g.dart';
-
-@match
 enum OrderStatus {
   initial,
   loading,

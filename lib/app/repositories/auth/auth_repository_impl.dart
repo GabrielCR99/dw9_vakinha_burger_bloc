@@ -20,13 +20,13 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      final result = await _dio.unauth().post(
+      final result = await _dio.unauth().post<Map<String, dynamic>>(
         '/auth',
         data: {'email': email, 'password': password},
       );
 
-      return AuthModel.fromMap(result.data);
-    } on DioError catch (e, s) {
+      return AuthModel.fromMap(result.data ?? const {});
+    } on DioException catch (e, s) {
       if (e.response?.statusCode == HttpStatus.unauthorized) {
         log('Permissão negada', error: e, stackTrace: s);
 
@@ -48,11 +48,11 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      await _dio.unauth().post(
+      await _dio.unauth().post<Map<String, dynamic>>(
         '/users',
         data: {'name': name, 'email': email, 'password': password},
       );
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao registrar usuário', error: e, stackTrace: s);
 
       Error.throwWithStackTrace(

@@ -1,9 +1,5 @@
-import 'package:equatable/equatable.dart';
-import 'package:match/match.dart';
+part of 'register_controller.dart';
 
-part 'register_state.g.dart';
-
-@match
 enum RegisterStatus { initial, register, success, error }
 
 class RegisterState extends Equatable {

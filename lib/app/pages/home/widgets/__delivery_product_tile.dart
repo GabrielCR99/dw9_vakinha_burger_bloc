@@ -12,7 +12,7 @@ class _DeliveryProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async => _onPressedProduct(context),
+      onTap: () => _onPressedProduct(context),
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Row(
@@ -53,6 +53,12 @@ class _DeliveryProductTile extends StatelessWidget {
             FadeInImage.assetNetwork(
               placeholder: 'assets/images/loading.gif',
               image: product.image,
+              imageErrorBuilder: (_, __, ___) => Container(
+                color: context.appColors.secondary,
+                width: 100,
+                height: 100,
+                child: const Icon(Icons.error, color: Colors.white),
+              ),
               width: 100,
               height: 100,
             ),

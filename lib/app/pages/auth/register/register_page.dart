@@ -8,7 +8,6 @@ import '../../../core/ui/widgets/custom_text_form_field.dart';
 import '../../../core/ui/widgets/delivery_app_bar.dart';
 import '../../../core/ui/widgets/delivery_button.dart';
 import 'controller/register_controller.dart';
-import 'controller/register_state.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -23,31 +22,25 @@ class _RegisterPageState extends BaseState<RegisterPage, RegisterController> {
   final _passwordEC = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  void dispose() {
-    _formKey.currentState?.dispose();
-    _nameEC.dispose();
-    _emailEC.dispose();
-    _passwordEC.dispose();
-    super.dispose();
+  void _registerListener(BuildContext context, RegisterState state) {
+    switch (state.status) {
+      case RegisterStatus.initial:
+      case RegisterStatus.register:
+        showLoader();
+      case RegisterStatus.success:
+        hideLoader();
+        showSuccess('Usuário registrado com sucesso');
+        Navigator.of(context).pop();
+      case RegisterStatus.error:
+        hideLoader();
+        showError('Erro ao registrar usuário');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<RegisterController, RegisterState>(
-      listener: (_, state) => state.status.matchAny(
-        any: hideLoader,
-        register: showLoader,
-        success: () {
-          hideLoader();
-          showSuccess('Usuário registrado com sucesso');
-          Navigator.of(context).pop();
-        },
-        error: () {
-          hideLoader();
-          showError('Erro ao registrar usuário');
-        },
-      ),
+      listener: _registerListener,
       child: Scaffold(
         appBar: DeliveryAppBar(),
         body: SingleChildScrollView(
@@ -84,9 +77,8 @@ class _RegisterPageState extends BaseState<RegisterPage, RegisterController> {
                   ),
                   const SizedBox(height: 30),
                   CustomTextFormField(
-                    controller: _passwordEC,
                     label: 'Senha',
-                    obscureText: true,
+                    controller: _passwordEC,
                     validator: Validatorless.multiple([
                       Validatorless.required('Senha obrigatória'),
                       Validatorless.min(
@@ -94,11 +86,11 @@ class _RegisterPageState extends BaseState<RegisterPage, RegisterController> {
                         'Senha deve ter no mínimo 6 caracteres',
                       ),
                     ]),
+                    obscureText: true,
                   ),
                   const SizedBox(height: 30),
                   CustomTextFormField(
                     label: 'Confirmar senha',
-                    obscureText: true,
                     validator: Validatorless.multiple([
                       Validatorless.required('Senha obrigatória'),
                       Validatorless.compare(
@@ -106,13 +98,14 @@ class _RegisterPageState extends BaseState<RegisterPage, RegisterController> {
                         'As senhas não são iguais',
                       ),
                     ]),
+                    obscureText: true,
                   ),
                   const SizedBox(height: 30),
                   Center(
                     child: DeliveryButton(
                       label: 'Cadastrar',
-                      onPressed: _onPressedRegister,
                       width: double.infinity,
+                      onPressed: _onPressedRegister,
                     ),
                   ),
                 ],
@@ -122,6 +115,15 @@ class _RegisterPageState extends BaseState<RegisterPage, RegisterController> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _formKey.currentState?.dispose();
+    _nameEC.dispose();
+    _emailEC.dispose();
+    _passwordEC.dispose();
+    super.dispose();
   }
 
   void _onPressedRegister() {

@@ -11,9 +11,9 @@ class CustomDio extends DioForNative {
   CustomDio()
       : super(
           BaseOptions(
-            baseUrl: Env.i['backend_base_url'] ?? '',
             connectTimeout: const Duration(milliseconds: 5000),
             receiveTimeout: const Duration(milliseconds: 60000),
+            baseUrl: Env.i['backend_base_url'] ?? '',
           ),
         ) {
     if (kDebugMode) {

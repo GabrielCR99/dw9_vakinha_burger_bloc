@@ -43,14 +43,14 @@ class _ProductDetailPageState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: context.width,
-            height: context.percentHeight(0.4),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(widget.product.image),
                 fit: BoxFit.cover,
               ),
             ),
+            width: context.width,
+            height: context.percentHeight(0.4),
           ),
           const SizedBox(height: 10),
           Padding(
@@ -73,9 +73,9 @@ class _ProductDetailPageState
           Row(
             children: [
               Container(
+                padding: const EdgeInsets.all(8),
                 width: context.percentWidth(0.5),
                 height: 68,
-                padding: const EdgeInsets.all(8),
                 child: BlocBuilder<ProductDetailController, int>(
                   builder: (_, amount) => DeliveryIncrementDecrementButton(
                     amount: amount,
@@ -85,15 +85,15 @@ class _ProductDetailPageState
                 ),
               ),
               Container(
+                padding: const EdgeInsets.all(8),
                 width: context.percentWidth(0.5),
                 height: 68,
-                padding: const EdgeInsets.all(8),
                 child: BlocBuilder<ProductDetailController, int>(
                   builder: (_, amount) => ElevatedButton(
+                    onPressed: () => _onPressedAddOrDelete(amount),
                     style: amount == 0
                         ? ElevatedButton.styleFrom(backgroundColor: Colors.red)
                         : null,
-                    onPressed: () => _onPressedAddOrDelete(amount),
                     child: amount > 0
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,12 +107,12 @@ class _ProductDetailPageState
                               Expanded(
                                 child: AutoSizeText(
                                   (widget.product.price * amount).currencyPtBr,
-                                  maxFontSize: 13,
-                                  minFontSize: 5,
-                                  maxLines: 1,
-                                  textAlign: TextAlign.center,
                                   style: context.textStyles.textExtraBold
                                       .copyWith(fontSize: 13),
+                                  minFontSize: 5,
+                                  maxFontSize: 13,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
                                 ),
                               ),
                             ],
@@ -140,9 +140,8 @@ class _ProductDetailPageState
     }
   }
 
-  void _showConfirmDelete(int amount) => showDialog(
+  void _showConfirmDelete(int amount) => showDialog<void>(
         context: context,
-        barrierDismissible: false,
         builder: (context) => AlertDialog(
           title: const Text('Deseja excluir o produto?'),
           actions: [
@@ -156,12 +155,11 @@ class _ProductDetailPageState
             TextButton(
               onPressed: () => Navigator.of(context)
                 ..pop()
-                ..pop(
-                  OrderProductDto(product: widget.product, amount: amount),
-                ),
+                ..pop(OrderProductDto(product: widget.product, amount: amount)),
               child: Text('Confirmar', style: context.textStyles.textBold),
             ),
           ],
         ),
+        barrierDismissible: false,
       );
 }

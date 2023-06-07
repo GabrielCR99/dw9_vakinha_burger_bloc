@@ -1,9 +1,5 @@
-import 'package:equatable/equatable.dart';
-import 'package:match/match.dart';
+part of 'login_controller.dart';
 
-part 'login_state.g.dart';
-
-@match
 enum LoginStatus {
   initial,
   login,
