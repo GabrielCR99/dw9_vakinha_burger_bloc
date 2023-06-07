@@ -15,13 +15,13 @@ class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<List<ProductModel>> findAll() async {
     try {
-      final response = await _dio.unauth().get('/products');
+      final response = await _dio.unauth().get<List<Object?>>('/products');
 
-      return (response.data as List)
+      return (response.data ?? const [])
           .cast<Map<String, dynamic>>()
           .map<ProductModel>(ProductModel.fromMap)
           .toList();
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao buscar produtos', error: e, stackTrace: s);
 
       Error.throwWithStackTrace(

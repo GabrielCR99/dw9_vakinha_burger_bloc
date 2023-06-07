@@ -14,7 +14,6 @@ import '../../core/ui/widgets/delivery_increment_decrement_button.dart';
 import '../../dto/order_product_dto.dart';
 import '../../models/payment_type_model.dart';
 import 'controller/order_controller.dart';
-import 'controller/order_state.dart';
 import 'widgets/payment_types_field.dart';
 
 part 'widgets/__order_field.dart';
@@ -39,46 +38,45 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
   void onReady() {
     super.onReady();
     final products =
-        ModalRoute.of(context)!.settings.arguments as List<OrderProductDto>;
+        ModalRoute.of(context)!.settings.arguments! as List<OrderProductDto>;
     controller.load(products);
   }
 
-  @override
-  void dispose() {
-    _formKey.currentState?.dispose();
-    _addressEC.dispose();
-    _documentEC.dispose();
-    super.dispose();
+  void _orderListener(BuildContext context, OrderState state) {
+    switch (state.status) {
+      case OrderStatus.initial:
+      case OrderStatus.loaded:
+        hideLoader();
+      case OrderStatus.updatedOrder:
+        break;
+      case OrderStatus.loading:
+        showLoader();
+      case OrderStatus.error:
+        hideLoader();
+        showError(state.errorMessage!);
+      case OrderStatus.success:
+        hideLoader();
+        showSuccess('Pedido realizado com sucesso');
+        Navigator.of(context).popAndPushNamed<void, List<OrderProductDto>>(
+          '/order/completed',
+          result: const [],
+        );
+      case OrderStatus.confirmDeleteProduct:
+        hideLoader();
+        if (state is OrderConfirmDeleteProductState) {
+          _showConfirmDeleteProduct(state);
+        }
+      case OrderStatus.emptyBag:
+        showInfo('Sua sacola está vazia! Adicione produtos para continuar.');
+        Navigator.of(context).pop<List<OrderProductDto>>(const []);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<OrderController, OrderState>(
-      listener: (_, state) => state.status.matchAny(
-        any: hideLoader,
-        loading: showLoader,
-        error: () {
-          hideLoader();
-          showError(state.errorMessage ?? 'Erro não informado');
-        },
-        confirmDeleteProduct: () {
-          hideLoader();
-          if (state is OrderConfirmDeleteProductState) {
-            _showConfirmDeleteProduct(state);
-          }
-        },
-        emptyBag: () {
-          showInfo('Sua sacola está vazia! Adicione produtos para continuar.');
-          Navigator.of(context).pop(const <OrderProductDto>[]);
-        },
-        success: () {
-          hideLoader();
-          Navigator.of(context).popAndPushNamed(
-            '/order/completed',
-            result: const <OrderProductDto>[],
-          );
-        },
-      ),
+      listener: _orderListener,
+      // ignore: arguments-ordering
       child: WillPopScope(
         onWillPop: _onWillPop,
         child: Scaffold(
@@ -95,10 +93,7 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
                     ),
                     child: Row(
                       children: [
-                        Text(
-                          'Carrinho',
-                          style: context.textStyles.textTitle,
-                        ),
+                        Text('Carrinho', style: context.textStyles.textTitle),
                         IconButton(
                           onPressed: controller.emptyBag,
                           icon: Image.asset('assets/images/trashRegular.png'),
@@ -112,7 +107,6 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
                   selector: (state) => state.products,
                   builder: (_, state) => SliverList(
                     delegate: SliverChildBuilderDelegate(
-                      childCount: state.length,
                       (_, index) => Column(
                         children: [
                           _OrderProductTile(
@@ -122,6 +116,7 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
                           const Divider(color: Colors.grey),
                         ],
                       ),
+                      childCount: state.length,
                     ),
                   ),
                 ),
@@ -153,21 +148,21 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
                       const SizedBox(height: 10),
                       _OrderField(
                         title: 'Endereço de entrega',
-                        hintText: 'Digite um endereço',
+                        controller: _addressEC,
                         validator:
                             Validatorless.required('Endereço obrigatório'),
-                        controller: _addressEC,
+                        hintText: 'Digite um endereço',
                       ),
                       const SizedBox(height: 10),
                       _OrderField(
                         title: 'Cpf',
-                        hintText: 'Digite o cpf',
-                        inputFormatters: [_cpfMask],
+                        controller: _documentEC,
                         validator: Validatorless.multiple([
                           Validatorless.required('Cpf obrigatório'),
                           Validatorless.cpf('Cpf inválido'),
                         ]),
-                        controller: _documentEC,
+                        hintText: 'Digite o cpf',
+                        inputFormatters: [_cpfMask],
                       ),
                       const SizedBox(height: 20),
                       BlocSelector<OrderController, OrderState,
@@ -197,8 +192,8 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
                         child: DeliveryButton(
                           label: 'FINALIZAR',
                           width: double.infinity,
-                          height: 48,
                           onPressed: _onPressedFinish,
+                          height: 48,
                         ),
                       ),
                     ],
@@ -210,6 +205,14 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _formKey.currentState?.dispose();
+    _addressEC.dispose();
+    _documentEC.dispose();
+    super.dispose();
   }
 
   Future<bool> _onWillPop() async {
@@ -233,12 +236,12 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
   }
 
   void _showConfirmDeleteProduct(OrderConfirmDeleteProductState state) =>
-      showDialog(
+      showDialog<void>(
         context: context,
-        barrierDismissible: false,
         builder: (context) => AlertDialog(
-          title:
-              Text('Deseja excluir o produto ${state.product.product.name}?'),
+          title: Text(
+            'Deseja excluir o produto ${state.product.product.name}?',
+          ),
           actions: [
             TextButton(
               onPressed: () => _cancelDeleteProduct(context),
@@ -249,10 +252,14 @@ class _OrderPageState extends BaseState<OrderPage, OrderController> {
             ),
             TextButton(
               onPressed: () => _confirmDeleteProduct(context, state),
-              child: Text('Confirmar', style: context.textStyles.textBold),
+              child: Text(
+                'Confirmar',
+                style: context.textStyles.textBold,
+              ),
             ),
           ],
         ),
+        barrierDismissible: false,
       );
 
   void _cancelDeleteProduct(BuildContext context) {

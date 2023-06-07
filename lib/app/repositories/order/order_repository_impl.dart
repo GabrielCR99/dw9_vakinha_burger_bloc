@@ -16,13 +16,13 @@ class OrderRepositoryImpl implements OrderRepository {
   @override
   Future<List<PaymentTypeModel>> getPaymentTypes() async {
     try {
-      final result = await _dio.auth().get('/payment-types');
+      final result = await _dio.auth().get<List<Object?>>('/payment-types');
 
-      return (result.data as List)
+      return (result.data ?? const [])
           .cast<Map<String, dynamic>>()
           .map<PaymentTypeModel>(PaymentTypeModel.fromMap)
           .toList();
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao buscar tipos de pagamento', error: e, stackTrace: s);
 
       Error.throwWithStackTrace(
@@ -35,7 +35,7 @@ class OrderRepositoryImpl implements OrderRepository {
   @override
   Future<void> saveOrder(OrderDto order) async {
     try {
-      await _dio.auth().post(
+      await _dio.auth().post<Map<String, dynamic>>(
         '/orders',
         data: {
           'products': order.products
@@ -53,7 +53,7 @@ class OrderRepositoryImpl implements OrderRepository {
           'payment_method_id': order.paymentMethodId,
         },
       );
-    } on DioError catch (e, s) {
+    } on DioException catch (e, s) {
       log('Erro ao salvar pedido', error: e, stackTrace: s);
 
       Error.throwWithStackTrace(

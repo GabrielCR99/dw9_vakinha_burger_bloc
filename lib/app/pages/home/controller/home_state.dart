@@ -1,12 +1,5 @@
-import 'package:equatable/equatable.dart';
-import 'package:match/match.dart';
+part of 'home_controller.dart';
 
-import '../../../dto/order_product_dto.dart';
-import '../../../models/product_model.dart';
-
-part 'home_state.g.dart';
-
-@match
 enum HomeStatus {
   initial,
   loading,
@@ -14,7 +7,7 @@ enum HomeStatus {
   error,
 }
 
-class HomeState extends Equatable {
+final class HomeState extends Equatable {
   final HomeStatus status;
   final List<ProductModel> products;
   final String? errorMessage;
@@ -45,7 +38,7 @@ class HomeState extends Equatable {
       HomeState(
         status: status ?? this.status,
         products: products ?? this.products,
-        errorMessage: errorMessage ?? this.errorMessage,
         bag: bag ?? this.bag,
+        errorMessage: errorMessage ?? this.errorMessage,
       );
 }

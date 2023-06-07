@@ -41,8 +41,10 @@ class DeliveryIncrementDecrementButton extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
                 '-',
-                style: context.textStyles.textMedium
-                    .copyWith(fontSize: _compact ? 10 : 22, color: Colors.grey),
+                style: context.textStyles.textMedium.copyWith(
+                  fontSize: _compact ? 10 : 22,
+                  color: Colors.grey,
+                ),
               ),
             ),
           ),

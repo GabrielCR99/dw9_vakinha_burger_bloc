@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  const AppColors._();
-
   static AppColors? _instance;
+
+  const AppColors._();
 
   static AppColors get i {
     _instance ??= const AppColors._();
