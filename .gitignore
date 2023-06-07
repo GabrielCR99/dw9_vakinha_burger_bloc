@@ -33,6 +33,7 @@
 # *.lock
 # *.g.dart
 *.freezed.dart
+.env
 *.env.*
 /metrics/
 /dw_vakinha_api/
