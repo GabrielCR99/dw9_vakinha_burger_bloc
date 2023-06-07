@@ -19,16 +19,18 @@ class OrderCompletedPage extends StatelessWidget {
               Image.asset('assets/images/logo_rounded.png'),
               const SizedBox(height: 10),
               Text(
-                'Pedido realizado com sucesso, em breve você receberá a confirmação do seu pedido!',
+                'Pedido realizado com sucesso, em breve você receberá a '
+                'confirmação do seu pedido!',
                 style: context.textStyles.textExtraBold.copyWith(fontSize: 18),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
               DeliveryButton(
                 label: 'FECHAR',
-                onPressed: () => Navigator.of(context).pop(),
                 width: context.percentWidth(0.8),
+                onPressed: () => Navigator.of(context).pop(),
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

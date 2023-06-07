@@ -29,19 +29,12 @@ class CustomTextFormField extends StatelessWidget {
       valueListenable: _obscureTextVN,
       builder: (_, obscureTextVNValue, __) => TextFormField(
         controller: controller,
-        keyboardType: keyboardType,
-        validator: validator,
-        textInputAction: textInputAction,
-        obscureText: obscureTextVNValue,
-        onFieldSubmitted: onFieldSubmitted != null
-            ? (value) => _onFieldSubmitted(value, context)
-            : null,
         decoration: InputDecoration(
           labelText: label,
           suffixIcon: obscureText
               ? IconButton(
-                  onPressed: () => _obscureTextVN.value = !obscureTextVNValue,
                   iconSize: 24,
+                  onPressed: () => _obscureTextVN.value = !obscureTextVNValue,
                   icon: Icon(
                     _getIcon(obscureTextVNValue),
                     color: context.appColors.primary,
@@ -50,6 +43,13 @@ class CustomTextFormField extends StatelessWidget {
               : null,
           counterText: '',
         ),
+        keyboardType: keyboardType,
+        textInputAction: textInputAction,
+        obscureText: obscureTextVNValue,
+        onFieldSubmitted: onFieldSubmitted != null
+            ? (value) => _onFieldSubmitted(value, context)
+            : null,
+        validator: validator,
       ),
     );
   }

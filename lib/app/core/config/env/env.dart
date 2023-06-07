@@ -1,9 +1,9 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Env {
-  const Env._();
-
   static Env? _instance;
+
+  const Env._();
 
   static Env get i {
     _instance ??= const Env._();

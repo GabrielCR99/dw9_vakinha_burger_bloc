@@ -15,17 +15,17 @@ class _ShoppingBagWidget extends StatelessWidget {
         .currencyPtBr;
 
     return Container(
-      width: context.width,
-      height: 90,
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
         color: Colors.white,
-        boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 5)],
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
           topRight: Radius.circular(10),
         ),
+        boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 5)],
       ),
+      width: context.width,
+      height: 90,
       child: ElevatedButton(
         onPressed: () => _goToOrder(context),
         child: Stack(

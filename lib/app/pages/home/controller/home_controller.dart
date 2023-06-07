@@ -1,15 +1,19 @@
-import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../dto/order_product_dto.dart';
+import '../../../models/product_model.dart';
 import '../../../repositories/products/products_repository.dart';
-import 'home_state.dart';
+part 'home_state.dart';
 
 class HomeController extends Cubit<HomeState> {
   final ProductsRepository _productsRepository;
 
   HomeController({required ProductsRepository productsRepository})
       : _productsRepository = productsRepository,
-        super(const HomeState.initial());
+        super(const HomeState.initial()) {
+    loadProducts();
+  }
 
   Future<void> loadProducts() async {
     emit(state.copyWith(status: HomeStatus.loading));

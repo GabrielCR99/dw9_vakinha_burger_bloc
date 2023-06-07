@@ -4,9 +4,9 @@ import 'app_colors.dart';
 import 'text_styles.dart';
 
 class AppStyles {
-  const AppStyles._();
-
   static AppStyles? _instance;
+
+  const AppStyles._();
 
   static AppStyles get i {
     _instance ??= const AppStyles._();
@@ -20,5 +20,6 @@ class AppStyles {
           borderRadius: BorderRadius.all(Radius.circular(7)),
         ),
         textStyle: TextStyles.i.textButtonLabel,
+        foregroundColor: Colors.white,
       );
 }

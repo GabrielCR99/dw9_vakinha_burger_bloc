@@ -16,8 +16,8 @@ class _OrderField extends StatelessWidget {
   });
 
   static const _defaultBorder = UnderlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10)),
     borderSide: BorderSide(color: Colors.grey),
+    borderRadius: BorderRadius.all(Radius.circular(10)),
   );
 
   @override
@@ -40,14 +40,14 @@ class _OrderField extends StatelessWidget {
           ),
           TextFormField(
             controller: controller,
-            validator: validator,
-            inputFormatters: inputFormatters,
             decoration: InputDecoration(
               hintText: hintText,
-              border: _defaultBorder,
-              enabledBorder: _defaultBorder,
               focusedBorder: _defaultBorder,
+              enabledBorder: _defaultBorder,
+              border: _defaultBorder,
             ),
+            validator: validator,
+            inputFormatters: inputFormatters,
           ),
         ],
       ),

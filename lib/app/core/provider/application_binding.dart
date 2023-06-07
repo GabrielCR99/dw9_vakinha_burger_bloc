@@ -6,19 +6,17 @@ import '../../repositories/auth/auth_repository.dart';
 import '../../repositories/auth/auth_repository_impl.dart';
 import '../rest_client/custom_dio.dart';
 
-class ApplicationBinding extends StatelessWidget {
+class ApplicationBinding extends MultiProvider {
   final Widget child;
 
-  const ApplicationBinding({required this.child, super.key});
-
-  @override
-  Widget build(BuildContext context) => MultiProvider(
-        providers: [
-          Provider(create: (_) => CustomDio()),
-          RepositoryProvider<AuthRepository>(
-            create: (context) => AuthRepositoryImpl(dio: context.read()),
-          ),
-        ],
-        child: child,
-      );
+  ApplicationBinding({required this.child, super.key})
+      : super(
+          providers: [
+            Provider(create: (_) => CustomDio()),
+            RepositoryProvider<AuthRepository>(
+              create: (context) => AuthRepositoryImpl(dio: context.read()),
+            ),
+          ],
+          child: child,
+        );
 }

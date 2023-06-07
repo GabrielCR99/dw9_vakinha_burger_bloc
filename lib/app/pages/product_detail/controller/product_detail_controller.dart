@@ -1,9 +1,9 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductDetailController extends Cubit<int> {
-  ProductDetailController() : super(1);
-
   late final bool _hasOrder;
+
+  ProductDetailController() : super(1);
 
   void initial(int amount, {bool hasOrder = false}) {
     _hasOrder = hasOrder;

@@ -8,7 +8,6 @@ import '../../../core/ui/widgets/custom_text_form_field.dart';
 import '../../../core/ui/widgets/delivery_app_bar.dart';
 import '../../../core/ui/widgets/delivery_button.dart';
 import 'controller/login_controller.dart';
-import 'controller/login_state.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -22,33 +21,27 @@ class _LoginPageState extends BaseState<LoginPage, LoginController> {
   final _emailEC = TextEditingController();
   final _passwordEC = TextEditingController();
 
-  @override
-  void dispose() {
-    _formKey.currentState?.dispose();
-    _emailEC.dispose();
-    _passwordEC.dispose();
-    super.dispose();
+  void _loginListener(BuildContext context, LoginState state) {
+    switch (state.status) {
+      case LoginStatus.initial:
+      case LoginStatus.login:
+        showLoader();
+      case LoginStatus.success:
+        hideLoader();
+        Navigator.of(context).pop(true);
+      case LoginStatus.loginError:
+        hideLoader();
+        showError(state.errorMessage!);
+      case LoginStatus.error:
+        hideLoader();
+        showError('Erro ao fazer login');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginController, LoginState>(
-      listener: (_, state) => state.status.matchAny(
-        any: hideLoader,
-        login: showLoader,
-        success: () {
-          hideLoader();
-          Navigator.of(context).pop(true);
-        },
-        loginError: () {
-          hideLoader();
-          showError(state.errorMessage!);
-        },
-        error: () {
-          hideLoader();
-          showError('Erro ao fazer login');
-        },
-      ),
+      listener: _loginListener,
       child: Scaffold(
         appBar: DeliveryAppBar(),
         body: CustomScrollView(
@@ -64,28 +57,26 @@ class _LoginPageState extends BaseState<LoginPage, LoginController> {
                       Text('Login', style: context.textStyles.textTitle),
                       const SizedBox(height: 30),
                       CustomTextFormField(
-                        controller: _emailEC,
                         label: 'Email',
-                        keyboardType: TextInputType.emailAddress,
+                        controller: _emailEC,
                         validator: Validatorless.multiple([
                           Validatorless.required('Email obrigatório'),
                           Validatorless.email('Email inválido'),
                         ]),
+                        keyboardType: TextInputType.emailAddress,
                       ),
                       const SizedBox(height: 30),
                       CustomTextFormField(
-                        controller: _passwordEC,
-                        obscureText: true,
                         label: 'Senha',
+                        controller: _passwordEC,
                         validator: Validatorless.required('Senha obrigatória'),
+                        obscureText: true,
                       ),
                       const SizedBox(height: 50),
-                      Center(
-                        child: DeliveryButton(
-                          label: 'Entrar',
-                          width: double.infinity,
-                          onPressed: _onPressedLogin,
-                        ),
+                      DeliveryButton(
+                        label: 'Entrar',
+                        width: double.infinity,
+                        onPressed: _onPressedLogin,
                       ),
                     ],
                   ),
@@ -123,6 +114,14 @@ class _LoginPageState extends BaseState<LoginPage, LoginController> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _formKey.currentState?.dispose();
+    _emailEC.dispose();
+    _passwordEC.dispose();
+    super.dispose();
   }
 
   void _onPressedLogin() {

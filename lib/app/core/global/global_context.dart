@@ -7,9 +7,9 @@ class GlobalContext {
   // ! Never let this key public
   late final GlobalKey<NavigatorState> _navigatorKey;
 
-  GlobalContext._();
-
   static GlobalContext? _instance;
+
+  GlobalContext._();
 
   static GlobalContext get i {
     _instance ??= GlobalContext._();

@@ -13,9 +13,9 @@ class PaymentTypeModel {
 
   factory PaymentTypeModel.fromMap(Map<String, dynamic> map) =>
       PaymentTypeModel(
-        id: map['id']?.toInt() ?? 0,
-        name: map['name'] ?? '',
-        acronym: map['acronym'] ?? '',
-        enabled: map['enabled'] ?? false,
+        id: (map['id'] as num?)?.toInt() ?? 0,
+        name: map['name'] as String? ?? '',
+        acronym: map['acronym'] as String? ?? '',
+        enabled: map['enabled'] as bool? ?? false,
       );
 }

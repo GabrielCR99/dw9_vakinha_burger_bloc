@@ -1,11 +1,14 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../dto/order_dto.dart';
 import '../../../dto/order_product_dto.dart';
+import '../../../models/payment_type_model.dart';
 import '../../../repositories/order/order_repository.dart';
-import 'order_state.dart';
+
+part 'order_state.dart';
 
 class OrderController extends Cubit<OrderState> {
   final OrderRepository _repository;

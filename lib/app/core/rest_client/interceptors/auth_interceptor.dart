@@ -29,7 +29,10 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
-  Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     if (err.response?.statusCode == HttpStatus.unauthorized) {
       try {
         if (err.requestOptions.path != '/auth/refresh') {
@@ -60,33 +63,39 @@ class AuthInterceptor extends Interceptor {
         data: {'refresh_token': refreshToken},
       );
 
-      await sp.setString('accessToken', resultRefresh.data!['access_token']);
-      await sp.setString('refreshToken', resultRefresh.data!['refresh_token']);
-    } on DioError catch (e, s) {
+      await sp.setString(
+        'accessToken',
+        resultRefresh.data!['access_token'] as String,
+      );
+      await sp.setString(
+        'refreshToken',
+        resultRefresh.data!['refresh_token'] as String,
+      );
+    } on DioException catch (e, s) {
       log('Erro ao realizar refresh token', error: e, stackTrace: s);
       Error.throwWithStackTrace(ExpireTokenException(), s);
     }
   }
 
   Future<void> _retryRequest(
-    DioError err,
+    DioException err,
     ErrorInterceptorHandler handler,
   ) async {
     final requestOptions = err.requestOptions;
-    final result = await _dio.request(
+    final result = await _dio.request<Map<String, dynamic>>(
       requestOptions.path,
       data: requestOptions.data,
       queryParameters: requestOptions.queryParameters,
       options: Options(
-        headers: requestOptions.headers,
         method: requestOptions.method,
+        headers: requestOptions.headers,
       ),
     );
 
     return handler.resolve(
       Response(
-        requestOptions: requestOptions,
         data: result.data,
+        requestOptions: requestOptions,
         statusCode: result.statusCode,
         statusMessage: result.statusMessage,
       ),
