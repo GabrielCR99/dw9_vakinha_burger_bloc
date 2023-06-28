@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'text_styles.dart';
 
-class AppStyles {
+final class AppStyles {
   static AppStyles? _instance;
 
   const AppStyles._();

@@ -1,1 +1,1 @@
-class ExpireTokenException implements Exception {}
+final class ExpireTokenException implements Exception {}

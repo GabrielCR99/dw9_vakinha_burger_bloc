@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-class GlobalContext {
+final class GlobalContext {
   // ! Never let this key public
   late final GlobalKey<NavigatorState> _navigatorKey;
 

@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import '../config/env/env.dart';
 import 'interceptors/auth_interceptor.dart';
 
-class CustomDio extends DioForNative {
+interface class CustomDio extends DioForNative {
   late final _authInterceptor = AuthInterceptor(dio: this);
 
   CustomDio()

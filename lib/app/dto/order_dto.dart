@@ -1,6 +1,6 @@
 import 'order_product_dto.dart';
 
-class OrderDto {
+final class OrderDto {
   final List<OrderProductDto> products;
   final String address;
   final String document;

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProductDetailController extends Cubit<int> {
+final class ProductDetailController extends Cubit<int> {
   late final bool _hasOrder;
 
   ProductDetailController() : super(1);

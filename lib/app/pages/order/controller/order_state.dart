@@ -11,7 +11,7 @@ enum OrderStatus {
   success,
 }
 
-class OrderState extends Equatable {
+final class OrderState extends Equatable {
   final OrderStatus status;
   final List<OrderProductDto> products;
   final List<PaymentTypeModel> payments;
@@ -54,7 +54,7 @@ class OrderState extends Equatable {
       );
 }
 
-class OrderConfirmDeleteProductState extends OrderState {
+final class OrderConfirmDeleteProductState extends OrderState {
   final OrderProductDto product;
   final int index;
 

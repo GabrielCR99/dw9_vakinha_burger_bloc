@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
+final class AppColors {
   static AppColors? _instance;
 
   const AppColors._();

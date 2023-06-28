@@ -1,4 +1,4 @@
-class PaymentTypeModel {
+final class PaymentTypeModel {
   final int id;
   final String name;
   final String acronym;

@@ -8,7 +8,7 @@ import '../../dto/order_dto.dart';
 import '../../models/payment_type_model.dart';
 import 'order_repository.dart';
 
-class OrderRepositoryImpl implements OrderRepository {
+final class OrderRepositoryImpl implements OrderRepository {
   final CustomDio _dio;
 
   const OrderRepositoryImpl({required CustomDio dio}) : _dio = dio;

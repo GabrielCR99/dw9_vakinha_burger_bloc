@@ -1,5 +1,5 @@
 import '../../models/product_model.dart';
 
-abstract class ProductsRepository {
+abstract interface class ProductsRepository {
   Future<List<ProductModel>> findAll();
 }

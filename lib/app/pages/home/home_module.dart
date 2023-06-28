@@ -6,7 +6,7 @@ import '../../repositories/products/products_repository_impl.dart';
 import 'controller/home_controller.dart';
 import 'home_page.dart';
 
-class HomeModule extends MultiProvider {
+final class HomeModule extends MultiProvider {
   HomeModule({super.key, super.child = const HomePage()})
       : super(
           providers: [

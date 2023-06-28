@@ -1,4 +1,4 @@
-class AuthModel {
+final class AuthModel {
   final String accessToken;
   final String refreshToken;
 

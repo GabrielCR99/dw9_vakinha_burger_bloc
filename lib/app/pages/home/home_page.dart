@@ -22,6 +22,7 @@ class HomePage extends StatelessWidget {
   void _homeListener(BuildContext context, HomeState state) {
     switch (state.status) {
       case HomeStatus.initial:
+        break;
       case HomeStatus.loading:
         context.showLoader();
       case HomeStatus.loaded:
@@ -60,8 +61,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
         listener: _homeListener,
-        buildWhen: (_, current) =>
-            switch (current.status) { HomeStatus.loaded => true, _ => false },
+        buildWhen: (_, current) => current.status == HomeStatus.loaded,
       ),
     );
   }

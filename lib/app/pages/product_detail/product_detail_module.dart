@@ -7,7 +7,7 @@ import '../../models/product_model.dart';
 import 'controller/product_detail_controller.dart';
 import 'product_detail_page.dart';
 
-class ProductDetailModule extends BlocProvider<ProductDetailController> {
+final class ProductDetailModule extends BlocProvider<ProductDetailController> {
   ProductDetailModule({super.key})
       : super(
           create: (_) => ProductDetailController(),

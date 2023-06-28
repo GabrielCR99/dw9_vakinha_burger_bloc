@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TextStyles {
+final class TextStyles {
   static TextStyles? _instance;
 
   const TextStyles._();

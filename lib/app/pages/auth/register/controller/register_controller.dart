@@ -4,9 +4,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../repositories/auth/auth_repository.dart';
+
 part 'register_state.dart';
 
-class RegisterController extends Cubit<RegisterState> {
+final class RegisterController extends Cubit<RegisterState> {
   final AuthRepository _authRepository;
 
   RegisterController({required AuthRepository authRepository})

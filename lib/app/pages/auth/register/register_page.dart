@@ -16,7 +16,8 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends BaseState<RegisterPage, RegisterController> {
+final class _RegisterPageState
+    extends BaseState<RegisterPage, RegisterController> {
   final _nameEC = TextEditingController();
   final _emailEC = TextEditingController();
   final _passwordEC = TextEditingController();

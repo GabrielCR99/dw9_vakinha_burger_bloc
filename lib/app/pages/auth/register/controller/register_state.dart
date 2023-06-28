@@ -1,8 +1,13 @@
 part of 'register_controller.dart';
 
-enum RegisterStatus { initial, register, success, error }
+enum RegisterStatus {
+  initial,
+  register,
+  success,
+  error,
+}
 
-class RegisterState extends Equatable {
+final class RegisterState extends Equatable {
   final RegisterStatus status;
 
   const RegisterState._({required this.status});

@@ -10,7 +10,7 @@ import '../../../repositories/order/order_repository.dart';
 
 part 'order_state.dart';
 
-class OrderController extends Cubit<OrderState> {
+final class OrderController extends Cubit<OrderState> {
   final OrderRepository _repository;
 
   OrderController({required OrderRepository orderRepository})

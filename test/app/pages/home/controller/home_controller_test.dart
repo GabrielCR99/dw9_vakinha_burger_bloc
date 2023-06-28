@@ -9,7 +9,7 @@ import 'package:test/test.dart';
 
 class MockProductsRepository extends Mock implements ProductsRepository {}
 
-class MockDio extends Mock implements CustomDio {
+final class MockDio extends Mock implements CustomDio {
   MockDio() {
     when(auth).thenReturn(this);
     when(unauth).thenReturn(this);

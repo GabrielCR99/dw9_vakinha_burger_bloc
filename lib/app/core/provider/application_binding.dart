@@ -6,7 +6,7 @@ import '../../repositories/auth/auth_repository.dart';
 import '../../repositories/auth/auth_repository_impl.dart';
 import '../rest_client/custom_dio.dart';
 
-class ApplicationBinding extends MultiProvider {
+final class ApplicationBinding extends MultiProvider {
   final Widget child;
 
   ApplicationBinding({required this.child, super.key})

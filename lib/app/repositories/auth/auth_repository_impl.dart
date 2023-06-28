@@ -9,7 +9,7 @@ import '../../core/rest_client/custom_dio.dart';
 import '../../models/auth_model.dart';
 import 'auth_repository.dart';
 
-class AuthRepositoryImpl implements AuthRepository {
+final class AuthRepositoryImpl implements AuthRepository {
   final CustomDio _dio;
 
   const AuthRepositoryImpl({required CustomDio dio}) : _dio = dio;

@@ -26,7 +26,7 @@ class ProductDetailPage extends StatefulWidget {
   State<ProductDetailPage> createState() => _ProductDetailPageState();
 }
 
-class _ProductDetailPageState
+final class _ProductDetailPageState
     extends BaseState<ProductDetailPage, ProductDetailController> {
   @override
   void initState() {

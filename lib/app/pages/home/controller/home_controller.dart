@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../dto/order_product_dto.dart';
 import '../../../models/product_model.dart';
 import '../../../repositories/products/products_repository.dart';
+
 part 'home_state.dart';
 
-class HomeController extends Cubit<HomeState> {
+final class HomeController extends Cubit<HomeState> {
   final ProductsRepository _productsRepository;
 
   HomeController({required ProductsRepository productsRepository})

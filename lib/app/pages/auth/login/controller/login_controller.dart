@@ -9,7 +9,7 @@ import '../../../../repositories/auth/auth_repository.dart';
 
 part 'login_state.dart';
 
-class LoginController extends Cubit<LoginState> {
+final class LoginController extends Cubit<LoginState> {
   final AuthRepository _authRepository;
 
   LoginController({required AuthRepository authRepository})

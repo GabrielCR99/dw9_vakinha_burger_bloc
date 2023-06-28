@@ -26,7 +26,7 @@ class OrderPage extends StatefulWidget {
   State<OrderPage> createState() => _OrderPageState();
 }
 
-class _OrderPageState extends BaseState<OrderPage, OrderController> {
+final class _OrderPageState extends BaseState<OrderPage, OrderController> {
   final _formKey = GlobalKey<FormState>();
   final _addressEC = TextEditingController();
   final _documentEC = TextEditingController();

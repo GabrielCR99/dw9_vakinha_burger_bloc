@@ -7,7 +7,7 @@ import '../../core/rest_client/custom_dio.dart';
 import '../../models/product_model.dart';
 import 'products_repository.dart';
 
-class ProductsRepositoryImpl implements ProductsRepository {
+final class ProductsRepositoryImpl implements ProductsRepository {
   final CustomDio _dio;
 
   const ProductsRepositoryImpl({required CustomDio dio}) : _dio = dio;

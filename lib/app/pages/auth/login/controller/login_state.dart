@@ -8,7 +8,7 @@ enum LoginStatus {
   error,
 }
 
-class LoginState extends Equatable {
+final class LoginState extends Equatable {
   final LoginStatus status;
   final String? errorMessage;
 

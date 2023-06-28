@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../models/product_model.dart';
 
-class OrderProductDto extends Equatable {
+final class OrderProductDto extends Equatable {
   final ProductModel product;
   final int amount;
 

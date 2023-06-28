@@ -6,7 +6,7 @@ import '../../repositories/order/order_repository_impl.dart';
 import 'controller/order_controller.dart';
 import 'order_page.dart';
 
-class OrderModule extends MultiProvider {
+final class OrderModule extends MultiProvider {
   OrderModule({super.key, super.child = const OrderPage()})
       : super(
           providers: [
