@@ -15,7 +15,7 @@ import 'pages/splash/splash_page.dart';
 
 part 'core/ui/theme/theme_config.dart';
 
-class DwDeliveryApp extends StatelessWidget {
+final class DwDeliveryApp extends StatelessWidget {
   final _navigatorKey = GlobalKey<NavigatorState>();
 
   DwDeliveryApp({super.key}) {

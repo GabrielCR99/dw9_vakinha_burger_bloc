@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/ui/helpers/size_extensions.dart';
 import '../../core/ui/widgets/delivery_button.dart';
 
-class SplashPage extends StatelessWidget {
+final class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
   @override
@@ -17,8 +17,10 @@ class SplashPage extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: SizedBox(
                 width: context.width,
-                child:
-                    Image.asset('assets/images/lanche.png', fit: BoxFit.cover),
+                child: Image.asset(
+                  'assets/images/lanche.png',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Center(
@@ -30,8 +32,10 @@ class SplashPage extends StatelessWidget {
                   DeliveryButton(
                     label: 'ACESSAR',
                     width: context.percentWidth(0.6),
-                    onPressed: () =>
-                        Navigator.of(context).popAndPushNamed('/home'),
+                    onPressed:
+                        () => Navigator.of(
+                          context,
+                        ).popAndPushNamed<void, void>('/home'),
                     height: 35,
                   ),
                 ],

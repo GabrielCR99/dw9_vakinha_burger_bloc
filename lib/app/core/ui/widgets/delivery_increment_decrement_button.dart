@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../styles/app_colors.dart';
 import '../styles/text_styles.dart';
 
-class DeliveryIncrementDecrementButton extends StatelessWidget {
+final class DeliveryIncrementDecrementButton extends StatelessWidget {
   final int amount;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;

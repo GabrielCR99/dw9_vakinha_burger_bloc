@@ -9,18 +9,18 @@ import 'product_detail_page.dart';
 
 final class ProductDetailModule extends BlocProvider<ProductDetailController> {
   ProductDetailModule({super.key})
-      : super(
-          create: (_) => ProductDetailController(),
-          child: Builder(
-            builder: (context) {
-              final args = ModalRoute.of(context)!.settings.arguments!
-                  as Map<String, dynamic>;
+    : super(
+        create: (_) => ProductDetailController(),
+        child: Builder(
+          builder: (context) {
+            final {
+              'product': ProductModel product,
+              'order': OrderProductDto? order,
+            } = ModalRoute.of(context)!.settings.arguments!
+                    as Map<String, dynamic>;
 
-              return ProductDetailPage(
-                product: args['product'] as ProductModel,
-                productOrder: args['order'] as OrderProductDto?,
-              );
-            },
-          ),
-        );
+            return ProductDetailPage(product: product, productOrder: order);
+          },
+        ),
+      );
 }

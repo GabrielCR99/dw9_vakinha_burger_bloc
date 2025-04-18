@@ -1,18 +1,19 @@
 part of '../home_page.dart';
 
-class _ShoppingBagWidget extends StatelessWidget {
+final class _ShoppingBagWidget extends StatelessWidget {
   final List<OrderProductDto> bag;
 
   const _ShoppingBagWidget({required this.bag});
 
   @override
   Widget build(BuildContext context) {
-    final totalBag = bag
-        .fold<double>(
-          0,
-          (previousValue, element) => previousValue + element.totalPrice,
-        )
-        .currencyPtBr;
+    final totalBag =
+        bag
+            .fold<double>(
+              0,
+              (previousValue, element) => previousValue + element.totalPrice,
+            )
+            .currencyPtBr;
 
     return Container(
       padding: const EdgeInsets.all(16),

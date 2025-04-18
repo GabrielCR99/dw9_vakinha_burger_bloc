@@ -8,16 +8,16 @@ import 'order_page.dart';
 
 final class OrderModule extends MultiProvider {
   OrderModule({super.key, super.child = const OrderPage()})
-      : super(
-          providers: [
-            RepositoryProvider<OrderRepository>(
-              create: (context) => OrderRepositoryImpl(dio: context.read()),
-              lazy: true,
-            ),
-            BlocProvider(
-              create: (context) =>
-                  OrderController(orderRepository: context.read()),
-            ),
-          ],
-        );
+    : super(
+        providers: [
+          RepositoryProvider<OrderRepository>(
+            create: (context) => OrderRepositoryImpl(dio: context.read()),
+            lazy: true,
+          ),
+          BlocProvider(
+            create:
+                (context) => OrderController(orderRepository: context.read()),
+          ),
+        ],
+      );
 }

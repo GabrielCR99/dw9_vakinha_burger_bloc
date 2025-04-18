@@ -29,8 +29,9 @@ class _OrderProductTile extends StatelessWidget {
                 children: [
                   Text(
                     product.name,
-                    style:
-                        context.textStyles.textRegular.copyWith(fontSize: 16),
+                    style: context.textStyles.textRegular.copyWith(
+                      fontSize: 16,
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,12 +45,14 @@ class _OrderProductTile extends StatelessWidget {
                       ),
                       DeliveryIncrementDecrementButton.compact(
                         amount: orderProduct.amount,
-                        onIncrement: () => context
-                            .read<OrderController>()
-                            .incrementProduct(index),
-                        onDecrement: () => context
-                            .read<OrderController>()
-                            .decrementProduct(index),
+                        onIncrement:
+                            () => context
+                                .read<OrderController>()
+                                .incrementProduct(index),
+                        onDecrement:
+                            () => context
+                                .read<OrderController>()
+                                .decrementProduct(index),
                       ),
                     ],
                   ),

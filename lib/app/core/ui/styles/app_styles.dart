@@ -15,11 +15,11 @@ final class AppStyles {
   }
 
   ButtonStyle get primaryButton => ElevatedButton.styleFrom(
-        backgroundColor: AppColors.i.primary,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(7)),
-        ),
-        textStyle: TextStyles.i.textButtonLabel,
-        foregroundColor: Colors.white,
-      );
+    backgroundColor: AppColors.i.primary,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(7)),
+    ),
+    textStyle: TextStyles.i.textButtonLabel,
+    foregroundColor: Colors.white,
+  );
 }

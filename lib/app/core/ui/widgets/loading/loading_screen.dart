@@ -3,7 +3,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'loading_screen_controller.dart';
 
-class LoadingScreen {
+final class LoadingScreen {
   LoadingScreenController? _controller;
   static LoadingScreen? _instance;
 
@@ -31,16 +31,17 @@ class LoadingScreen {
     final state = Overlay.of(context);
 
     final overlay = OverlayEntry(
-      builder: (_) => WillPopScope(
-        onWillPop: () async => false,
-        child: Material(
-          color: Colors.black.withAlpha(150),
-          child: LoadingAnimationWidget.threeArchedCircle(
-            color: Colors.white,
-            size: 60,
+      builder:
+          (_) => PopScope(
+            canPop: false,
+            child: Material(
+              color: Colors.black.withAlpha(150),
+              child: LoadingAnimationWidget.threeArchedCircle(
+                color: Colors.white,
+                size: 60,
+              ),
+            ),
           ),
-        ),
-      ),
     );
 
     state.insert(overlay);

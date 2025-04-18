@@ -9,7 +9,7 @@ import '../../../core/ui/widgets/delivery_app_bar.dart';
 import '../../../core/ui/widgets/delivery_button.dart';
 import 'controller/login_controller.dart';
 
-class LoginPage extends StatefulWidget {
+final class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
@@ -97,12 +97,15 @@ final class _LoginPageState extends BaseState<LoginPage, LoginController> {
                         style: context.textStyles.textBold,
                       ),
                       TextButton(
-                        onPressed: () =>
-                            Navigator.of(context).pushNamed('/auth/register'),
+                        onPressed:
+                            () => Navigator.of(
+                              context,
+                            ).pushNamed('/auth/register'),
                         child: Text(
                           'Cadastre-se',
-                          style: context.textStyles.textBold
-                              .copyWith(color: Colors.blue),
+                          style: context.textStyles.textBold.copyWith(
+                            color: Colors.blue,
+                          ),
                         ),
                       ),
                     ],
@@ -128,10 +131,7 @@ final class _LoginPageState extends BaseState<LoginPage, LoginController> {
     final formValid = _formKey.currentState?.validate() ?? false;
 
     if (formValid) {
-      controller.login(
-        email: _emailEC.text,
-        password: _passwordEC.text,
-      );
+      controller.login(email: _emailEC.text, password: _passwordEC.text);
     }
   }
 }

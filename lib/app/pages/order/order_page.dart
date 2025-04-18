@@ -19,7 +19,7 @@ import 'widgets/payment_types_field.dart';
 part 'widgets/__order_field.dart';
 part 'widgets/__order_product_tile.dart';
 
-class OrderPage extends StatefulWidget {
+final class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
 
   @override
@@ -76,9 +76,9 @@ final class _OrderPageState extends BaseState<OrderPage, OrderController> {
   Widget build(BuildContext context) {
     return BlocListener<OrderController, OrderState>(
       listener: _orderListener,
-      // ignore: arguments-ordering
-      child: WillPopScope(
-        onWillPop: _onWillPop,
+      child: PopScope(
+        onPopInvokedWithResult:
+            (_, __) => Navigator.of(context).pop(controller.state.products),
         child: Scaffold(
           appBar: DeliveryAppBar(),
           body: Form(
@@ -102,23 +102,27 @@ final class _OrderPageState extends BaseState<OrderPage, OrderController> {
                     ),
                   ),
                 ),
-                BlocSelector<OrderController, OrderState,
-                    List<OrderProductDto>>(
+                BlocSelector<
+                  OrderController,
+                  OrderState,
+                  List<OrderProductDto>
+                >(
                   selector: (state) => state.products,
-                  builder: (_, state) => SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (_, index) => Column(
-                        children: [
-                          _OrderProductTile(
-                            index: index,
-                            orderProduct: state[index],
+                  builder:
+                      (_, state) => SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (_, index) => Column(
+                            children: [
+                              _OrderProductTile(
+                                index: index,
+                                orderProduct: state[index],
+                              ),
+                              const Divider(color: Colors.grey),
+                            ],
                           ),
-                          const Divider(color: Colors.grey),
-                        ],
+                          childCount: state.length,
+                        ),
                       ),
-                      childCount: state.length,
-                    ),
-                  ),
                 ),
                 SliverToBoxAdapter(
                   child: Column(
@@ -130,16 +134,18 @@ final class _OrderPageState extends BaseState<OrderPage, OrderController> {
                           children: [
                             Text(
                               'Total do pedido',
-                              style: context.textStyles.textExtraBold
-                                  .copyWith(fontSize: 16),
+                              style: context.textStyles.textExtraBold.copyWith(
+                                fontSize: 16,
+                              ),
                             ),
                             BlocSelector<OrderController, OrderState, double>(
                               selector: (state) => state.totalOrder,
-                              builder: (_, totalOrder) => Text(
-                                totalOrder.currencyPtBr,
-                                style: context.textStyles.textExtraBold
-                                    .copyWith(fontSize: 20),
-                              ),
+                              builder:
+                                  (_, totalOrder) => Text(
+                                    totalOrder.currencyPtBr,
+                                    style: context.textStyles.textExtraBold
+                                        .copyWith(fontSize: 20),
+                                  ),
                             ),
                           ],
                         ),
@@ -149,8 +155,9 @@ final class _OrderPageState extends BaseState<OrderPage, OrderController> {
                       _OrderField(
                         title: 'Endereço de entrega',
                         controller: _addressEC,
-                        validator:
-                            Validatorless.required('Endereço obrigatório'),
+                        validator: Validatorless.required(
+                          'Endereço obrigatório',
+                        ),
                         hintText: 'Digite um endereço',
                       ),
                       const SizedBox(height: 10),
@@ -165,19 +172,25 @@ final class _OrderPageState extends BaseState<OrderPage, OrderController> {
                         inputFormatters: [_cpfMask],
                       ),
                       const SizedBox(height: 20),
-                      BlocSelector<OrderController, OrderState,
-                          List<PaymentTypeModel>>(
+                      BlocSelector<
+                        OrderController,
+                        OrderState,
+                        List<PaymentTypeModel>
+                      >(
                         selector: (state) => state.payments,
-                        builder: (_, payments) => ValueListenableBuilder(
-                          valueListenable: _paymentTypeValid,
-                          builder: (_, paymentTypeValidValue, __) =>
-                              PaymentTypesField(
-                            payments: payments,
-                            onChanged: (value) => _paymentTypeId = value,
-                            valid: paymentTypeValidValue,
-                            selectedValue: '$_paymentTypeId',
-                          ),
-                        ),
+                        builder:
+                            (_, payments) => ValueListenableBuilder(
+                              valueListenable: _paymentTypeValid,
+                              builder:
+                                  (_, paymentTypeValidValue, __) =>
+                                      PaymentTypesField(
+                                        payments: payments,
+                                        onChanged:
+                                            (value) => _paymentTypeId = value,
+                                        valid: paymentTypeValidValue,
+                                        selectedValue: '$_paymentTypeId',
+                                      ),
+                            ),
                       ),
                     ],
                   ),
@@ -215,12 +228,6 @@ final class _OrderPageState extends BaseState<OrderPage, OrderController> {
     super.dispose();
   }
 
-  Future<bool> _onWillPop() async {
-    Navigator.of(context).pop(controller.state.products);
-
-    return false;
-  }
-
   void _onPressedFinish() {
     final formValid = _formKey.currentState?.validate() ?? false;
     final hasSelectedPaymentType = _paymentTypeId != null;
@@ -238,27 +245,27 @@ final class _OrderPageState extends BaseState<OrderPage, OrderController> {
   void _showConfirmDeleteProduct(OrderConfirmDeleteProductState state) =>
       showDialog<void>(
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text(
-            'Deseja excluir o produto ${state.product.product.name}?',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => _cancelDeleteProduct(context),
-              child: Text(
-                'Cancelar',
-                style: context.textStyles.textBold.copyWith(color: Colors.red),
+        builder:
+            (context) => AlertDialog(
+              title: Text(
+                'Deseja excluir o produto ${state.product.product.name}?',
               ),
+              actions: [
+                TextButton(
+                  onPressed: () => _cancelDeleteProduct(context),
+                  child: Text(
+                    'Cancelar',
+                    style: context.textStyles.textBold.copyWith(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => _confirmDeleteProduct(context, state),
+                  child: Text('Confirmar', style: context.textStyles.textBold),
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () => _confirmDeleteProduct(context, state),
-              child: Text(
-                'Confirmar',
-                style: context.textStyles.textBold,
-              ),
-            ),
-          ],
-        ),
         barrierDismissible: false,
       );
 

@@ -1,13 +1,10 @@
 part of '../home_page.dart';
 
-class _DeliveryProductTile extends StatelessWidget {
+final class _DeliveryProductTile extends StatelessWidget {
   final ProductModel product;
   final OrderProductDto? productOrder;
 
-  const _DeliveryProductTile({
-    required this.product,
-    this.productOrder,
-  });
+  const _DeliveryProductTile({required this.product, this.productOrder});
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +22,18 @@ class _DeliveryProductTile extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text(
                       product.name,
-                      style: context.textStyles.textExtraBold
-                          .copyWith(fontSize: 16),
+                      style: context.textStyles.textExtraBold.copyWith(
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text(
                       product.description,
-                      style:
-                          context.textStyles.textRegular.copyWith(fontSize: 13),
+                      style: context.textStyles.textRegular.copyWith(
+                        fontSize: 13,
+                      ),
                     ),
                   ),
                   Padding(
@@ -53,12 +52,13 @@ class _DeliveryProductTile extends StatelessWidget {
             FadeInImage.assetNetwork(
               placeholder: 'assets/images/loading.gif',
               image: product.image,
-              imageErrorBuilder: (_, __, ___) => Container(
-                color: context.appColors.secondary,
-                width: 100,
-                height: 100,
-                child: const Icon(Icons.error, color: Colors.white),
-              ),
+              imageErrorBuilder:
+                  (_, __, ___) => Container(
+                    color: context.appColors.secondary,
+                    width: 100,
+                    height: 100,
+                    child: const Icon(Icons.error, color: Colors.white),
+                  ),
               width: 100,
               height: 100,
             ),
@@ -70,10 +70,12 @@ class _DeliveryProductTile extends StatelessWidget {
 
   Future<void> _onPressedProduct(BuildContext context) async {
     final controller = context.read<HomeController>();
-    final productOrderResult = await Navigator.of(context).pushNamed(
-      '/product_detail',
-      arguments: {'product': product, 'order': productOrder},
-    ) as OrderProductDto?;
+    final productOrderResult =
+        await Navigator.of(context).pushNamed(
+              '/product_detail',
+              arguments: {'product': product, 'order': productOrder},
+            )
+            as OrderProductDto?;
 
     if (productOrderResult != null) {
       controller.addOrUpdateBag(productOrderResult);

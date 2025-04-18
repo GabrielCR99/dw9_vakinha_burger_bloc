@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/exceptions/unauthorized_exception.dart';
+import '../../../../models/auth_model.dart';
 import '../../../../repositories/auth/auth_repository.dart';
 
 part 'login_state.dart';
@@ -13,18 +14,20 @@ final class LoginController extends Cubit<LoginState> {
   final AuthRepository _authRepository;
 
   LoginController({required AuthRepository authRepository})
-      : _authRepository = authRepository,
-        super(const LoginState.initial());
+    : _authRepository = authRepository,
+      super(const LoginState.initial());
 
   Future<void> login({required String email, required String password}) async {
     emit(state.copyWith(status: LoginStatus.login));
 
     try {
-      final authModel =
-          await _authRepository.login(email: email, password: password);
+      final AuthModel(:accessToken, :refreshToken) = await _authRepository
+          .login(email: email, password: password);
       final sp = await SharedPreferences.getInstance();
-      await sp.setString('accessToken', authModel.accessToken);
-      await sp.setString('refreshToken', authModel.refreshToken);
+      await Future.wait<bool>([
+        sp.setString('accessToken', accessToken),
+        sp.setString('refreshToken', refreshToken),
+      ]);
 
       emit(state.copyWith(status: LoginStatus.success));
     } on UnauthorizedException catch (_) {

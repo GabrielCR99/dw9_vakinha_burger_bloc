@@ -14,14 +14,15 @@ final class OrderController extends Cubit<OrderState> {
   final OrderRepository _repository;
 
   OrderController({required OrderRepository orderRepository})
-      : _repository = orderRepository,
-        super(const OrderState.initial());
+    : _repository = orderRepository,
+      super(const OrderState.initial());
 
   Future<void> load(List<OrderProductDto> products) async {
     emit(state.copyWith(status: OrderStatus.loading));
 
     try {
       final payments = await _repository.getPaymentTypes();
+
       emit(
         state.copyWith(
           products: products,

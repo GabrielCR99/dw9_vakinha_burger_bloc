@@ -5,7 +5,7 @@ import 'login_page.dart';
 
 final class LoginModule extends BlocProvider<LoginController> {
   LoginModule({super.key, super.child = const LoginPage()})
-      : super(
-          create: (context) => LoginController(authRepository: context.read()),
-        );
+    : super(
+        create: (context) => LoginController(authRepository: context.read()),
+      );
 }

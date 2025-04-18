@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../styles/app_colors.dart';
 
-class CustomTextFormField extends StatelessWidget {
+final class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final String label;
   final bool obscureText;
@@ -27,30 +27,34 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
       valueListenable: _obscureTextVN,
-      builder: (_, obscureTextVNValue, __) => TextFormField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: label,
-          suffixIcon: obscureText
-              ? IconButton(
-                  iconSize: 24,
-                  onPressed: () => _obscureTextVN.value = !obscureTextVNValue,
-                  icon: Icon(
-                    _getIcon(obscureTextVNValue),
-                    color: context.appColors.primary,
-                  ),
-                )
-              : null,
-          counterText: '',
-        ),
-        keyboardType: keyboardType,
-        textInputAction: textInputAction,
-        obscureText: obscureTextVNValue,
-        onFieldSubmitted: onFieldSubmitted != null
-            ? (value) => _onFieldSubmitted(value, context)
-            : null,
-        validator: validator,
-      ),
+      builder:
+          (_, obscureTextVNValue, __) => TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+              labelText: label,
+              suffixIcon:
+                  obscureText
+                      ? IconButton(
+                        iconSize: 24,
+                        onPressed:
+                            () => _obscureTextVN.value = !obscureTextVNValue,
+                        icon: Icon(
+                          _getIcon(obscureTextVNValue),
+                          color: context.appColors.primary,
+                        ),
+                      )
+                      : null,
+              counterText: '',
+            ),
+            keyboardType: keyboardType,
+            textInputAction: textInputAction,
+            obscureText: obscureTextVNValue,
+            onFieldSubmitted:
+                onFieldSubmitted != null
+                    ? (value) => _onFieldSubmitted(value, context)
+                    : null,
+            validator: validator,
+          ),
     );
   }
 

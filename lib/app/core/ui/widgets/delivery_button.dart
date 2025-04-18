@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DeliveryButton extends StatelessWidget {
+final class DeliveryButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
   final double width;

@@ -10,13 +10,13 @@ final class ApplicationBinding extends MultiProvider {
   final Widget child;
 
   ApplicationBinding({required this.child, super.key})
-      : super(
-          providers: [
-            Provider(create: (_) => CustomDio()),
-            RepositoryProvider<AuthRepository>(
-              create: (context) => AuthRepositoryImpl(dio: context.read()),
-            ),
-          ],
-          child: child,
-        );
+    : super(
+        providers: [
+          Provider(create: (_) => CustomDio()),
+          RepositoryProvider<AuthRepository>(
+            create: (context) => AuthRepositoryImpl(dio: context.read()),
+          ),
+        ],
+        child: child,
+      );
 }

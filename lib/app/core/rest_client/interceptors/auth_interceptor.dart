@@ -8,7 +8,7 @@ import '../../exceptions/expire_token_exception.dart';
 import '../../global/global_context.dart';
 import '../custom_dio.dart';
 
-class AuthInterceptor extends Interceptor {
+final class AuthInterceptor extends Interceptor {
   final CustomDio _dio;
 
   AuthInterceptor({required CustomDio dio}) : _dio = dio;
@@ -58,19 +58,14 @@ class AuthInterceptor extends Interceptor {
         return;
       }
 
-      final resultRefresh = await _dio.auth().put<Map<String, dynamic>>(
+      final Response(:data) = await _dio.auth().put<Map<String, dynamic>>(
         '/auth/refresh',
         data: {'refresh_token': refreshToken},
       );
-
-      await sp.setString(
-        'accessToken',
-        resultRefresh.data!['access_token'] as String,
-      );
-      await sp.setString(
-        'refreshToken',
-        resultRefresh.data!['refresh_token'] as String,
-      );
+      await Future.wait([
+        sp.setString('accessToken', data!['access_token'] as String),
+        sp.setString('refreshToken', data['refresh_token'] as String),
+      ]);
     } on DioException catch (e, s) {
       log('Erro ao realizar refresh token', error: e, stackTrace: s);
       Error.throwWithStackTrace(ExpireTokenException(), s);
@@ -82,22 +77,23 @@ class AuthInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     final requestOptions = err.requestOptions;
-    final result = await _dio.request<Map<String, dynamic>>(
-      requestOptions.path,
-      data: requestOptions.data,
-      queryParameters: requestOptions.queryParameters,
-      options: Options(
-        method: requestOptions.method,
-        headers: requestOptions.headers,
-      ),
-    );
+    final Response(:data, :statusCode, :statusMessage) = await _dio
+        .request<Map<String, dynamic>>(
+          requestOptions.path,
+          data: requestOptions.data,
+          queryParameters: requestOptions.queryParameters,
+          options: Options(
+            method: requestOptions.method,
+            headers: requestOptions.headers,
+          ),
+        );
 
     return handler.resolve(
       Response(
-        data: result.data,
+        data: data,
         requestOptions: requestOptions,
-        statusCode: result.statusCode,
-        statusMessage: result.statusMessage,
+        statusCode: statusCode,
+        statusMessage: statusMessage,
       ),
     );
   }

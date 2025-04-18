@@ -33,8 +33,10 @@ class _OrderField extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(
                 title,
-                style: context.textStyles.textRegular
-                    .copyWith(overflow: TextOverflow.ellipsis, fontSize: 16),
+                style: context.textStyles.textRegular.copyWith(
+                  overflow: TextOverflow.ellipsis,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),

@@ -11,10 +11,8 @@ final class HomeController extends Cubit<HomeState> {
   final ProductsRepository _productsRepository;
 
   HomeController({required ProductsRepository productsRepository})
-      : _productsRepository = productsRepository,
-        super(const HomeState.initial()) {
-    loadProducts();
-  }
+    : _productsRepository = productsRepository,
+      super(const HomeState.initial());
 
   Future<void> loadProducts() async {
     emit(state.copyWith(status: HomeStatus.loading));
@@ -34,8 +32,9 @@ final class HomeController extends Cubit<HomeState> {
 
   void addOrUpdateBag(OrderProductDto productOrder) {
     final shoppingBag = [...state.bag];
-    final orderIndex =
-        shoppingBag.indexWhere((e) => e.product == productOrder.product);
+    final orderIndex = shoppingBag.indexWhere(
+      (e) => e.product == productOrder.product,
+    );
 
     if (orderIndex != -1) {
       if (productOrder.amount == 0) {

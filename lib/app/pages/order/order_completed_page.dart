@@ -4,7 +4,7 @@ import '../../core/ui/helpers/size_extensions.dart';
 import '../../core/ui/styles/text_styles.dart';
 import '../../core/ui/widgets/delivery_button.dart';
 
-class OrderCompletedPage extends StatelessWidget {
+final class OrderCompletedPage extends StatelessWidget {
   const OrderCompletedPage({super.key});
 
   @override

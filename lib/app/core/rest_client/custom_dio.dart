@@ -9,13 +9,13 @@ interface class CustomDio extends DioForNative {
   late final _authInterceptor = AuthInterceptor(dio: this);
 
   CustomDio()
-      : super(
-          BaseOptions(
-            connectTimeout: const Duration(milliseconds: 5000),
-            receiveTimeout: const Duration(milliseconds: 60000),
-            baseUrl: Env.i['backend_base_url'] ?? '',
-          ),
-        ) {
+    : super(
+        BaseOptions(
+          connectTimeout: const Duration(milliseconds: 5000),
+          receiveTimeout: const Duration(milliseconds: 60000),
+          baseUrl: Env.i['backend_base_url'] ?? '',
+        ),
+      ) {
     if (kDebugMode) {
       interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
     }

@@ -16,8 +16,23 @@ import 'controller/home_controller.dart';
 part 'widgets/__delivery_product_tile.dart';
 part 'widgets/__shopping_bag_widget.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+final class HomePage extends StatefulWidget {
+  const HomePage({required this.controller, super.key});
+
+  final HomeController controller;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => widget.controller.loadProducts(),
+    );
+  }
 
   void _homeListener(BuildContext context, HomeState state) {
     switch (state.status) {
@@ -38,28 +53,31 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: DeliveryAppBar(),
       body: BlocConsumer<HomeController, HomeState>(
-        builder: (_, state) => Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (_, index) {
-                  final product = state.products[index];
-                  final orders = state.bag.where((e) => e.product == product);
+        builder:
+            (_, state) => Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (_, index) {
+                      final product = state.products[index];
+                      final orders = state.bag.where(
+                        (e) => e.product == product,
+                      );
 
-                  return _DeliveryProductTile(
-                    product: product,
-                    productOrder: orders.isNotEmpty ? orders.first : null,
-                  );
-                },
-                itemCount: state.products.length,
-              ),
+                      return _DeliveryProductTile(
+                        product: product,
+                        productOrder: orders.isNotEmpty ? orders.first : null,
+                      );
+                    },
+                    itemCount: state.products.length,
+                  ),
+                ),
+                if (state.bag.isNotEmpty)
+                  _ShoppingBagWidget(bag: state.bag)
+                else
+                  const SizedBox.shrink(),
+              ],
             ),
-            if (state.bag.isNotEmpty)
-              _ShoppingBagWidget(bag: state.bag)
-            else
-              const SizedBox.shrink(),
-          ],
-        ),
         listener: _homeListener,
         buildWhen: (_, current) => current.status == HomeStatus.loaded,
       ),

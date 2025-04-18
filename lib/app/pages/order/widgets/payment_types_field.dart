@@ -36,47 +36,51 @@ class PaymentTypesField extends StatelessWidget {
             selectedValue: selectedValue,
             onChange: (value) => onChanged(int.parse(value.value)),
             choiceItems: S2Choice.listFrom(
-              source: payments
-                  .map((e) => {'value': '${e.id}', 'title': e.name})
-                  .toList(),
+              source:
+                  payments
+                      .map((e) => {'value': '${e.id}', 'title': e.name})
+                      .toList(),
               title: (_, item) => item['title'] ?? '',
               value: (_, item) => item['value'] ?? '',
               group: (_, item) => 'Selecione uma forma de pagamento',
             ),
-            tileBuilder: (context, state) => InkWell(
-              onTap: state.showModal,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    width: context.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          state.selected.title ?? '',
-                          style: context.textStyles.textRegular,
+            tileBuilder:
+                (context, state) => InkWell(
+                  onTap: state.showModal,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        width: context.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              state.selected.title ?? '',
+                              style: context.textStyles.textRegular,
+                            ),
+                            const Icon(Icons.arrow_forward_ios_rounded),
+                          ],
                         ),
-                        const Icon(Icons.arrow_forward_ios_rounded),
-                      ],
-                    ),
-                  ),
-                  if (valid) const SizedBox.shrink() else const Divider(),
-                  if (valid)
-                    const SizedBox.shrink()
-                  else
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Text(
-                        'Selecione uma forma de pagamento',
-                        style: context.textStyles.textRegular
-                            .copyWith(fontSize: 13, color: Colors.red),
                       ),
-                    ),
-                ],
-              ),
-            ),
+                      if (valid) const SizedBox.shrink() else const Divider(),
+                      if (valid)
+                        const SizedBox.shrink()
+                      else
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Text(
+                            'Selecione uma forma de pagamento',
+                            style: context.textStyles.textRegular.copyWith(
+                              fontSize: 13,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
             choiceType: S2ChoiceType.radios,
             choiceGrouped: true,
             groupCounter: false,

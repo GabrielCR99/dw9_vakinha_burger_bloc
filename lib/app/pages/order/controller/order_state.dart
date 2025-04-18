@@ -25,17 +25,17 @@ final class OrderState extends Equatable {
   });
 
   const OrderState.initial()
-      : this._(
-          status: OrderStatus.initial,
-          products: const [],
-          payments: const [],
-          errorMessage: null,
-        );
+    : this._(
+        status: OrderStatus.initial,
+        products: const [],
+        payments: const [],
+        errorMessage: null,
+      );
 
   double get totalOrder => products.fold(
-        0,
-        (previousValue, element) => previousValue + element.totalPrice,
-      );
+    0,
+    (previousValue, element) => previousValue + element.totalPrice,
+  );
 
   @override
   List<Object?> get props => [status, products, payments, errorMessage];
@@ -45,13 +45,12 @@ final class OrderState extends Equatable {
     List<OrderProductDto>? products,
     List<PaymentTypeModel>? payments,
     String? errorMessage,
-  }) =>
-      OrderState._(
-        status: status,
-        products: products ?? this.products,
-        payments: payments ?? this.payments,
-        errorMessage: errorMessage ?? this.errorMessage,
-      );
+  }) => OrderState._(
+    status: status,
+    products: products ?? this.products,
+    payments: payments ?? this.payments,
+    errorMessage: errorMessage ?? this.errorMessage,
+  );
 }
 
 final class OrderConfirmDeleteProductState extends OrderState {

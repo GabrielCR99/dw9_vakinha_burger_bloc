@@ -7,7 +7,7 @@ import 'package:dw9_vakinha_burger_bloc/app/repositories/products/products_repos
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-class MockProductsRepository extends Mock implements ProductsRepository {}
+final class MockProductsRepository extends Mock implements ProductsRepository {}
 
 final class MockDio extends Mock implements CustomDio {
   MockDio() {
@@ -27,14 +27,14 @@ void main() {
     state = const HomeState.initial();
     homeController = HomeController(productsRepository: productsRepository);
     products = const [
-      ProductModel(
+      (
         id: 1,
         name: 'X-Burger',
         description: 'Hamburguer de carne bovina, queijo, alface e tomate',
         image: 'https://i.imgur.com/6Z0ZQYq.png',
         price: 10,
       ),
-      ProductModel(
+      (
         id: 2,
         name: 'X-Bacon',
         description:
@@ -44,7 +44,7 @@ void main() {
       ),
     ];
     productOrder = const OrderProductDto(
-      product: ProductModel(
+      product: (
         id: 1,
         name: 'X-Burger',
         description: 'Hamburguer de carne bovina, queijo, alface e tomate',
@@ -61,14 +61,17 @@ void main() {
       'bag: []), HomeState(status: HomeStatus.loaded, products: products, '
       'bag: const [])] when loadProducts is called',
       build: () => homeController,
-      setUp: () =>
-          when(productsRepository.findAll).thenAnswer((_) async => products),
+      setUp:
+          () => when(
+            productsRepository.findAll,
+          ).thenAnswer((_) async => products),
       seed: () => state,
       act: (controller) => controller.loadProducts(),
-      expect: () => <HomeState>[
-        state.copyWith(status: HomeStatus.loading),
-        state.copyWith(status: HomeStatus.loaded, products: products),
-      ],
+      expect:
+          () => <HomeState>[
+            state.copyWith(status: HomeStatus.loading),
+            state.copyWith(status: HomeStatus.loaded, products: products),
+          ],
       verify: (_) => verify(productsRepository.findAll).called(1),
     );
 
@@ -80,13 +83,14 @@ void main() {
       setUp: () => when(productsRepository.findAll).thenThrow(Exception()),
       seed: () => state,
       act: (controller) => controller.loadProducts(),
-      expect: () => <HomeState>[
-        state.copyWith(status: HomeStatus.loading),
-        state.copyWith(
-          status: HomeStatus.error,
-          errorMessage: 'Erro ao buscar produtos',
-        ),
-      ],
+      expect:
+          () => <HomeState>[
+            state.copyWith(status: HomeStatus.loading),
+            state.copyWith(
+              status: HomeStatus.error,
+              errorMessage: 'Erro ao buscar produtos',
+            ),
+          ],
       verify: (_) => verify(productsRepository.findAll).called(1),
     );
   });
@@ -97,12 +101,13 @@ void main() {
       build: () => homeController,
       seed: () => state,
       act: (controller) => controller.addOrUpdateBag(productOrder),
-      expect: () => <HomeState>[
-        state.copyWith(bag: [productOrder]),
-      ],
+      expect:
+          () => <HomeState>[
+            state.copyWith(bag: [productOrder]),
+          ],
     );
 
-/*     blocTest<HomeController, HomeState>(
+    /*     blocTest<HomeController, HomeState>(
       'Should update product in bag',
       build: () => homeController,
       seed: () => state.copyWith(bag: [productOrder]),

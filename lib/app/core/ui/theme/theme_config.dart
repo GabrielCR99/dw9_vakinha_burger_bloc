@@ -37,6 +37,7 @@ final _theme = ThemeData(
     backgroundColor: Colors.white,
     surfaceTintColor: Colors.white,
   ),
-  elevatedButtonTheme:
-      ElevatedButtonThemeData(style: AppStyles.i.primaryButton),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: AppStyles.i.primaryButton,
+  ),
 );

@@ -11,8 +11,8 @@ final class RegisterController extends Cubit<RegisterState> {
   final AuthRepository _authRepository;
 
   RegisterController({required AuthRepository authRepository})
-      : _authRepository = authRepository,
-        super(const RegisterState.initial());
+    : _authRepository = authRepository,
+      super(const RegisterState.initial());
 
   Future<void> register({
     required String email,

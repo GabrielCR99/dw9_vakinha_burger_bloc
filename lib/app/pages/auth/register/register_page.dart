@@ -52,10 +52,7 @@ final class _RegisterPageState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Cadastro',
-                    style: context.textStyles.textTitle,
-                  ),
+                  Text('Cadastro', style: context.textStyles.textTitle),
                   Text(
                     'Preencha os campos abaixo para criar o seu cadastro',
                     style: context.textStyles.textMedium.copyWith(fontSize: 18),

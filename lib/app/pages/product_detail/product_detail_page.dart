@@ -12,7 +12,7 @@ import '../../dto/order_product_dto.dart';
 import '../../models/product_model.dart';
 import 'controller/product_detail_controller.dart';
 
-class ProductDetailPage extends StatefulWidget {
+final class ProductDetailPage extends StatefulWidget {
   final ProductModel product;
   final OrderProductDto? productOrder;
 
@@ -77,11 +77,12 @@ final class _ProductDetailPageState
                 width: context.percentWidth(0.5),
                 height: 68,
                 child: BlocBuilder<ProductDetailController, int>(
-                  builder: (_, amount) => DeliveryIncrementDecrementButton(
-                    amount: amount,
-                    onIncrement: controller.increment,
-                    onDecrement: controller.decrement,
-                  ),
+                  builder:
+                      (_, amount) => DeliveryIncrementDecrementButton(
+                        amount: amount,
+                        onIncrement: controller.increment,
+                        onDecrement: controller.decrement,
+                      ),
                 ),
               ),
               Container(
@@ -89,39 +90,46 @@ final class _ProductDetailPageState
                 width: context.percentWidth(0.5),
                 height: 68,
                 child: BlocBuilder<ProductDetailController, int>(
-                  builder: (_, amount) => ElevatedButton(
-                    onPressed: () => _onPressedAddOrDelete(amount),
-                    style: amount == 0
-                        ? ElevatedButton.styleFrom(backgroundColor: Colors.red)
-                        : null,
-                    child: amount > 0
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Adicionar',
-                                style: context.textStyles.textExtraBold
-                                    .copyWith(fontSize: 13),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: AutoSizeText(
-                                  (widget.product.price * amount).currencyPtBr,
-                                  style: context.textStyles.textExtraBold
-                                      .copyWith(fontSize: 13),
-                                  minFontSize: 5,
-                                  maxFontSize: 13,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
+                  builder:
+                      (_, amount) => ElevatedButton(
+                        onPressed: () => _onPressedAddOrDelete(amount),
+                        style:
+                            amount == 0
+                                ? ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                )
+                                : null,
+                        child:
+                            amount > 0
+                                ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Adicionar',
+                                      style: context.textStyles.textExtraBold
+                                          .copyWith(fontSize: 13),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: AutoSizeText(
+                                        (widget.product.price * amount)
+                                            .currencyPtBr,
+                                        style: context.textStyles.textExtraBold
+                                            .copyWith(fontSize: 13),
+                                        minFontSize: 5,
+                                        maxFontSize: 13,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                                : Text(
+                                  'Excluir produto',
+                                  style: context.textStyles.textExtraBold,
                                 ),
-                              ),
-                            ],
-                          )
-                        : Text(
-                            'Excluir produto',
-                            style: context.textStyles.textExtraBold,
-                          ),
-                  ),
+                      ),
                 ),
               ),
             ],
@@ -135,14 +143,16 @@ final class _ProductDetailPageState
     if (amount == 0) {
       _showConfirmDelete(amount);
     } else {
-      Navigator.of(context)
-          .pop(OrderProductDto(product: widget.product, amount: amount));
+      Navigator.of(
+        context,
+      ).pop(OrderProductDto(product: widget.product, amount: amount));
     }
   }
 
   void _showConfirmDelete(int amount) => showDialog<void>(
-        context: context,
-        builder: (context) => AlertDialog(
+    context: context,
+    builder:
+        (context) => AlertDialog(
           title: const Text('Deseja excluir o produto?'),
           actions: [
             TextButton(
@@ -153,13 +163,20 @@ final class _ProductDetailPageState
               ),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context)
-                ..pop()
-                ..pop(OrderProductDto(product: widget.product, amount: amount)),
+              onPressed:
+                  () =>
+                      Navigator.of(context)
+                        ..pop<void>()
+                        ..pop(
+                          OrderProductDto(
+                            product: widget.product,
+                            amount: amount,
+                          ),
+                        ),
               child: Text('Confirmar', style: context.textStyles.textBold),
             ),
           ],
         ),
-        barrierDismissible: false,
-      );
+    barrierDismissible: false,
+  );
 }

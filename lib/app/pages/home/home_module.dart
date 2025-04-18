@@ -7,17 +7,18 @@ import 'controller/home_controller.dart';
 import 'home_page.dart';
 
 final class HomeModule extends MultiProvider {
-  HomeModule({super.key, super.child = const HomePage()})
-      : super(
-          providers: [
-            RepositoryProvider<ProductsRepository>(
-              create: (context) => ProductsRepositoryImpl(dio: context.read()),
-              lazy: true,
-            ),
-            BlocProvider(
-              create: (context) =>
-                  HomeController(productsRepository: context.read()),
-            ),
-          ],
-        );
+  HomeModule({super.key})
+    : super(
+        providers: [
+          RepositoryProvider<ProductsRepository>(
+            create: (context) => ProductsRepositoryImpl(dio: context.read()),
+            lazy: true,
+          ),
+          BlocProvider(
+            create:
+                (context) => HomeController(productsRepository: context.read()),
+          ),
+        ],
+        builder: (context, _) => HomePage(controller: context.read()),
+      );
 }

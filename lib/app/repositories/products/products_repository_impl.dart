@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 
+import '../../adapters/product_adapter.dart';
 import '../../core/exceptions/repository_exception.dart';
 import '../../core/rest_client/custom_dio.dart';
 import '../../models/product_model.dart';
@@ -15,11 +16,13 @@ final class ProductsRepositoryImpl implements ProductsRepository {
   @override
   Future<List<ProductModel>> findAll() async {
     try {
-      final response = await _dio.unauth().get<List<Object?>>('/products');
+      final Response(:data) = await _dio.unauth().get<List<Object?>>(
+        '/products',
+      );
 
-      return (response.data ?? const [])
+      return (data ?? const [])
           .cast<Map<String, dynamic>>()
-          .map<ProductModel>(ProductModel.fromMap)
+          .map<ProductModel>(ProductAdapter.fromMap)
           .toList();
     } on DioException catch (e, s) {
       log('Erro ao buscar produtos', error: e, stackTrace: s);

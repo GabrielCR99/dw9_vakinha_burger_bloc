@@ -6,8 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../helpers/loader.dart';
 import '../helpers/messages.dart';
 
-abstract base class BaseState<T extends StatefulWidget,
-    C extends BlocBase<Object>> extends State<T> with Loader<T>, Messages<T> {
+abstract base class BaseState<
+  T extends StatefulWidget,
+  C extends BlocBase<Object>
+>
+    extends State<T>
+    with Loader<T>, Messages<T> {
   late final C controller;
 
   @override

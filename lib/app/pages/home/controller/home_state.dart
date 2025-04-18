@@ -1,11 +1,6 @@
 part of 'home_controller.dart';
 
-enum HomeStatus {
-  initial,
-  loading,
-  loaded,
-  error,
-}
+enum HomeStatus { initial, loading, loaded, error }
 
 final class HomeState extends Equatable {
   final HomeStatus status;
@@ -21,10 +16,10 @@ final class HomeState extends Equatable {
   });
 
   const HomeState.initial()
-      : status = HomeStatus.initial,
-        products = const [],
-        errorMessage = null,
-        bag = const [];
+    : status = HomeStatus.initial,
+      products = const [],
+      errorMessage = null,
+      bag = const [];
 
   @override
   List<Object?> get props => [status, products, errorMessage, bag];
@@ -34,11 +29,10 @@ final class HomeState extends Equatable {
     List<ProductModel>? products,
     String? errorMessage,
     List<OrderProductDto>? bag,
-  }) =>
-      HomeState(
-        status: status ?? this.status,
-        products: products ?? this.products,
-        bag: bag ?? this.bag,
-        errorMessage: errorMessage ?? this.errorMessage,
-      );
+  }) => HomeState(
+    status: status ?? this.status,
+    products: products ?? this.products,
+    bag: bag ?? this.bag,
+    errorMessage: errorMessage ?? this.errorMessage,
+  );
 }

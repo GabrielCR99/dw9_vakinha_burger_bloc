@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import '../../adapters/auth_adapter.dart';
 import '../../core/exceptions/repository_exception.dart';
 import '../../core/exceptions/unauthorized_exception.dart';
 import '../../core/rest_client/custom_dio.dart';
@@ -20,12 +21,12 @@ final class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      final result = await _dio.unauth().post<Map<String, dynamic>>(
+      final Response(:data) = await _dio.unauth().post<Map<String, dynamic>>(
         '/auth',
         data: {'email': email, 'password': password},
       );
 
-      return AuthModel.fromMap(result.data ?? const {});
+      return AuthAdapter.fromMap(data ?? const {});
     } on DioException catch (e, s) {
       if (e.response?.statusCode == HttpStatus.unauthorized) {
         log('Permissão negada', error: e, stackTrace: s);

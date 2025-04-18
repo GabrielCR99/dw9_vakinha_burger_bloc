@@ -1,12 +1,6 @@
 part of 'login_controller.dart';
 
-enum LoginStatus {
-  initial,
-  login,
-  success,
-  loginError,
-  error,
-}
+enum LoginStatus { initial, login, success, loginError, error }
 
 final class LoginState extends Equatable {
   final LoginStatus status;
@@ -15,8 +9,8 @@ final class LoginState extends Equatable {
   const LoginState._({required this.status, this.errorMessage});
 
   const LoginState.initial()
-      : status = LoginStatus.initial,
-        errorMessage = null;
+    : status = LoginStatus.initial,
+      errorMessage = null;
 
   @override
   List<Object?> get props => [status, errorMessage];

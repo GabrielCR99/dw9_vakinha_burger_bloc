@@ -12,9 +12,10 @@ void main() {
   late LoginController controller;
 
   setUp(() {
-    SharedPreferences.setMockInitialValues(
-      {'accessToken': 'accessToken', 'refreshToken': 'refreshToken'},
-    );
+    SharedPreferences.setMockInitialValues(const {
+      'accessToken': 'accessToken',
+      'refreshToken': 'refreshToken',
+    });
     state = const LoginState.initial();
     repository = MockAuthRepository();
     controller = LoginController(authRepository: repository);
@@ -28,14 +29,18 @@ void main() {
       'with success.',
       build: () => controller,
       setUp: () => repository.mockLoginSuccess(),
-      act: (bloc) => controller.login(email: 'email', password: 'password'),
-      expect: () => <LoginState>[
-        state.copyWith(status: LoginStatus.login),
-        state.copyWith(status: LoginStatus.success),
-      ],
-      verify: (_) =>
-          verify(() => repository.login(email: 'email', password: 'password'))
-              .called(1),
+      act:
+          (controller) =>
+              controller.login(email: 'email', password: 'password'),
+      expect:
+          () => <LoginState>[
+            state.copyWith(status: LoginStatus.login),
+            state.copyWith(status: LoginStatus.success),
+          ],
+      verify:
+          (_) => verify(
+            () => repository.login(email: 'email', password: 'password'),
+          ).called(1),
     );
 
     blocTest<LoginController, LoginState>(
@@ -43,35 +48,44 @@ void main() {
       'with error.',
       build: () => controller,
       setUp: () => repository.mockLoginError(),
-      act: (bloc) => controller.login(email: 'email', password: 'password'),
-      expect: () => <LoginState>[
-        state.copyWith(status: LoginStatus.login),
-        state.copyWith(
-          status: LoginStatus.error,
-          errorMessage: 'Erro ao fazer login',
-        ),
-      ],
-      verify: (_) =>
-          verify(() => repository.login(email: 'email', password: 'password'))
-              .called(1),
+      act:
+          (controller) =>
+              controller.login(email: 'email', password: 'password'),
+      expect:
+          () => <LoginState>[
+            state.copyWith(status: LoginStatus.login),
+            state.copyWith(
+              status: LoginStatus.error,
+              errorMessage: 'Erro ao fazer login',
+            ),
+          ],
+      verify:
+          (_) => verify(
+            () => repository.login(email: 'email', password: 'password'),
+          ).called(1),
     );
 
     blocTest<LoginController, LoginState>(
       'emits [LoginStatus.login, LoginStatus.error] when login is called '
       'with error.',
       build: () => controller,
+      seed: () => state,
       setUp: () => repository.mockLoginUnauthorized(),
-      act: (bloc) => controller.login(email: 'email', password: 'password'),
-      expect: () => <LoginState>[
-        state.copyWith(status: LoginStatus.login),
-        state.copyWith(
-          status: LoginStatus.loginError,
-          errorMessage: 'Erro ao fazer login',
-        ),
-      ],
-      verify: (_) =>
-          verify(() => repository.login(email: 'email', password: 'password'))
-              .called(1),
+      act:
+          (controller) =>
+              controller.login(email: 'email', password: 'password'),
+      expect:
+          () => <LoginState>[
+            state.copyWith(status: LoginStatus.login),
+            state.copyWith(
+              status: LoginStatus.loginError,
+              errorMessage: 'Login ou senha inválidos',
+            ),
+          ],
+      verify:
+          (_) => verify(
+            () => repository.login(email: 'email', password: 'password'),
+          ).called(1),
     );
   });
 }
